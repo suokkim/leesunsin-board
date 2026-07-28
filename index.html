@@ -46,6 +46,8 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .g-axis{ position:relative; height:15px; margin:0 12px 9px 176px; font-size:.68rem; color:var(--sub); }
 .g-axis span{ position:absolute; transform:translateX(-50%); white-space:nowrap; }
 .g-axis span:first-child{ transform:none; }
+.g-axis span.now{ background:var(--crit); color:var(--paper); font-weight:650; letter-spacing:0;
+  padding:1px 5px; font-size:.64rem; transform:translateX(-50%); }
 .g-body{ position:relative; }
 .g-row{ display:flex; align-items:center; height:29px; }
 .g-row:nth-child(odd){ background:var(--rule); }
@@ -120,7 +122,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   <h2>제작 타임라인 — Blender 씬 제작</h2>
   <p class="sub">모델링 → 텍스처링 → 리깅 → 애니메이션. 라이팅·라이트 베이크와 씬 통합은 다음 구역(Blender 최종 마스터)입니다. S1 프롤로그는 Blender 제작 없이 Unity에서 바로 만들어 아래 표에만 있습니다.</p>
   <div class="gantt"><div class="g-inner">
-    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span></div>
+    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span><span class="now" style="left:30.8%">7/29</span></div>
     <div class="g-body">
       <div class="g-lanes"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="mile" style="left:99%"></i><i class="today" style="left:30.8%"></i></div>
 
@@ -181,7 +183,6 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
       <span><i style="background:var(--bl)"></i>Blender 제작</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>담당 미배치</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px);border:1px solid var(--mut)"></i>마감 미정·보류</span>
-      <span><b style="color:var(--crit)">붉은 세로선</b> = 오늘 7/29</span>
     </div>
   </div></div>
 </section>
@@ -190,7 +191,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   <h2>Blender 최종 마스터</h2>
   <p class="sub">씬 통합 → 애니 요소 배치 → <b>인터랙션 오브젝트·기믹 배치</b> → 액션 배치 → 라이팅·라이트 베이크. 문 열림·창문·엘리베이터·판넬 기믹처럼 체험자가 건드리는 오브젝트를 여기서 다 불러와 제자리에 놓고 동작까지 잡아 둡니다. Unity는 트리거만 연결합니다. 여기서 나온 파일이 Unity로 넘어가는 실제 인계물입니다. S1 프롤로그(Unity 직접 제작), S3-1 판타지와 S9(영상 제작)는 이 단계를 거치지 않습니다. 기간은 Unity 통합에서 앞부분을 떼어 확보했습니다(매니저 초안). <b style="color:var(--crit)">담당은 세트장 라이트 베이크(바이진 외 2명)를 빼면 전 씬 미정입니다.</b></p>
   <div class="gantt"><div class="g-inner">
-    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span></div>
+    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span><span class="now" style="left:30.8%">7/29</span></div>
     <div class="g-body">
       <div class="g-lanes"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="mile" style="left:99%"></i><i class="today" style="left:30.8%"></i></div>
 
@@ -222,7 +223,6 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     <div class="legend">
       <span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>담당 미배치</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px);border:1px solid var(--mut)"></i>일부만 배정 (라이트 베이크만)</span>
-      <span><b style="color:var(--crit)">붉은 세로선</b> = 오늘 7/29</span>
     </div>
   </div></div>
 </section>
@@ -231,7 +231,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   <h2>Unity 통합 타임라인 — 장성민</h2>
   <p class="sub">제작이 끝난 씬을 넘겨받아 통합하는 구간입니다. 씬 통합과 APK 빌드 전부를 장성민 님 한 사람이 맡습니다(S1 프롤로그만 이태용 님이 Unity에서 직접 제작). 같은 날 함께 넘어오는 씬은 한 줄로 묶었습니다. 막대 시작점은 Blender 최종 마스터가 끝나 넘어오는 날입니다. 마스터 구간을 떼어내면서 통합 기간이 줄었습니다 — S6-1 이틀, S5·S7 나흘, APK 빌드 사흘.</p>
   <div class="gantt"><div class="g-inner">
-    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span></div>
+    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span><span class="now" style="left:30.8%">7/29</span></div>
     <div class="g-body">
       <div class="g-lanes"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="mile" style="left:99%"></i><i class="today" style="left:30.8%"></i></div>
 
@@ -272,7 +272,6 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     <div class="legend">
       <span><i style="background:var(--un)"></i>Unity 통합</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px);border:1px solid var(--mut)"></i>인계일 미정</span>
-      <span><b style="color:var(--crit)">붉은 세로선</b> = 오늘 7/29</span>
     </div>
   </div></div>
 </section>
@@ -319,7 +318,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   <h2>사람별 타임라인</h2>
   <p class="sub">한 사람이 같은 시기에 몇 가지를 동시에 안고 있는지 보는 표입니다. 가는 줄은 겸임으로 병행하는 작업입니다.</p>
   <div class="gantt"><div class="g-inner">
-    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span></div>
+    <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span><span class="now" style="left:30.8%">7/29</span></div>
     <div class="g-body">
       <div class="g-lanes"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="mile" style="left:99%"></i><i class="today" style="left:30.8%"></i></div>
 
@@ -354,7 +353,6 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
       <span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>담당 미배치</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px);border:1px solid var(--mut)"></i>미정·보류</span>
       <span>가는 줄 = 겸임 병행</span>
-      <span><b style="color:var(--crit)">붉은 세로선</b> = 오늘 7/29</span>
     </div>
   </div></div>
 </section>
