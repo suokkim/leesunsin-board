@@ -3,6 +3,7 @@
 :root{
   --paper:#F6F5F0; --ink:#1E2733; --sub:#5B6472; --line:#DCD9CF;
   --accent:#2C5F8F; --accent-soft:#C9D9E8;
+  --bl:#2C5F8F; --un:#3F9E8C;
   --crit:#B3261E; --crit-soft:#F0D4D1;
   --warn:#9A6B1F; --warn-soft:#EBDDBB;
   --ok:#2F6B4F; --ok-soft:#D3E5DA;
@@ -11,15 +12,18 @@
 @media (prefers-color-scheme: dark){
   :root{ --paper:#151A21; --ink:#E8E5DC; --sub:#9AA3AF; --line:#2C3440;
     --accent:#6E9DCB; --accent-soft:#31465C;
+    --bl:#6E9DCB; --un:#4FB39C;
     --crit:#DE8078; --crit-soft:#472A26;
     --warn:#CFA254; --warn-soft:#3D321C; --ok:#79B394; --ok-soft:#22382D;
     --card:#1B222C; --today:#DE8078; }
 }
 :root[data-theme="light"]{ --paper:#F6F5F0; --ink:#1E2733; --sub:#5B6472; --line:#DCD9CF;
-  --accent:#2C5F8F; --accent-soft:#C9D9E8; --crit:#B3261E; --crit-soft:#F0D4D1;
+  --accent:#2C5F8F; --accent-soft:#C9D9E8; --bl:#2C5F8F; --un:#3F9E8C;
+  --crit:#B3261E; --crit-soft:#F0D4D1;
   --warn:#9A6B1F; --warn-soft:#EBDDBB; --ok:#2F6B4F; --ok-soft:#D3E5DA; --card:#FFFFFF; --today:#B3261E; }
 :root[data-theme="dark"]{ --paper:#151A21; --ink:#E8E5DC; --sub:#9AA3AF; --line:#2C3440;
-  --accent:#6E9DCB; --accent-soft:#31465C; --crit:#DE8078; --crit-soft:#472A26;
+  --accent:#6E9DCB; --accent-soft:#31465C; --bl:#6E9DCB; --un:#4FB39C;
+  --crit:#DE8078; --crit-soft:#472A26;
   --warn:#CFA254; --warn-soft:#3D321C; --ok:#79B394; --ok-soft:#22382D; --card:#1B222C; --today:#DE8078; }
 
 body{ background:var(--paper); color:var(--ink);
@@ -53,10 +57,10 @@ section .sub{ font-size:.78rem; color:var(--sub); margin:0 0 10px; }
 .g-track{ position:relative; flex:1; height:14px; border-radius:3px;
   background:linear-gradient(to right, transparent 0, transparent 100%); }
 .seg{ position:absolute; top:0; height:14px; border-radius:3px; }
-.seg.bl{ background:var(--accent); }
-.seg.un{ background:var(--accent-soft); }
-.seg.crit{ background:var(--crit); }
-.seg.crit-un{ background:var(--crit-soft); }
+.seg.bl{ background:var(--bl); }
+.seg.un{ background:var(--un); }
+/* 색 = 공정(파랑 Blender / 청록 Unity), 위험은 색을 덮지 않고 빨간 테두리로만 표시 */
+.seg.risk{ box-shadow:0 0 0 2px var(--crit); }
 .seg.warn{ background:var(--warn); }
 .seg.dash{ background:repeating-linear-gradient(45deg,var(--warn-soft),var(--warn-soft) 5px,transparent 5px,transparent 9px); border:1px dashed var(--warn); height:12px; }
 .seg.dash-c{ background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 5px,transparent 5px,transparent 9px); border:1px dashed var(--crit); height:12px; }
@@ -107,7 +111,7 @@ strong.crit{ color:var(--crit); }
     <div class="tile acc"><div class="k">1차 APK</div><div class="v">8/31</div><div class="s">빌드·프로파일링</div></div>
     <div class="tile acc"><div class="k">2차 테스트</div><div class="v">9/15</div><div class="s">멀티 동기화</div></div>
     <div class="tile acc"><div class="k">최종 납품</div><div class="v">9/30</div><div class="s">9/22~ 버퍼</div></div>
-    <div class="tile crit"><div class="k">7/31 위험</div><div class="v">4건</div><div class="s">세트장·S3-1·브릿지·S2-4</div></div>
+    <div class="tile crit"><div class="k">7/31 위험</div><div class="v">7건</div><div class="s">세트장·S3-1·브릿지·S2-1~S2-4 (S2 마감 통일)</div></div>
     <div class="tile crit"><div class="k">인력 미배치</div><div class="v">20건</div><div class="s">채용 확정 대기</div></div>
     <div class="tile warn"><div class="k">외주 무확인</div><div class="v">5건</div><div class="s">모캡·리허설·대사</div></div>
     <div class="tile warn"><div class="k">전체 진행률</div><div class="v">~20%</div><div class="s">Blender 기준 · Unity 0%</div></div>
@@ -116,36 +120,36 @@ strong.crit{ color:var(--crit); }
 
 <section>
   <h2>씬 타임라인</h2>
-  <p class="sub">막대 = 시작 → Blender 마감(진한색) → Unity 마감(연한색) · 세로선: <span style="color:var(--today);font-weight:700">오늘 7/28</span> · 마일스톤 7/31 · 8/31 · 9/15</p>
+  <p class="sub">막대 색 = 공정 (<b style="color:var(--bl)">파랑 Blender 제작</b> → <b style="color:var(--un)">청록 Unity 통합</b>) · <b style="color:var(--crit)">빨간 테두리 = 위험</b>(마감 D-3 / 담당 미배치) — 색은 덮지 않으므로 어느 공정인지 그대로 보입니다 · 세로선: <span style="color:var(--today);font-weight:700">오늘 7/28</span> · 마일스톤 7/31 · 8/31 · 9/15</p>
   <div class="gantt"><div class="g-inner">
     <div class="g-axis"><span style="left:0%">7/1</span><span style="left:34.1%">8/1</span><span style="left:68.1%">9/1</span><span style="left:98%">9/30</span></div>
     <div class="g-body">
       <div class="g-lanes g-grid"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:33%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="today" style="left:29.7%"></i></div>
       <div class="g-row"><div class="g-label"><b>S1 프롤로그</b> <span>이태용 · 80%</span></div><div class="g-track"><i class="seg un" style="left:5.5%;width:51.6%" title="유니티 직접 제작 7/6→8/22"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>세트장 공간</b> <span>백승호 · 40% ⚠️</span></div><div class="g-track"><i class="seg crit" style="left:25.3%;width:7.7%" title="7/24→7/31 D-3, 40%"></i><i class="seg un" style="left:33%;width:24.1%" title="Unity →8/22"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S2-1 만남</b> <span>권은기 · 40%</span></div><div class="g-track"><i class="seg bl" style="left:5.5%;width:36.3%" title="7/6→8/8"></i><i class="seg un" style="left:41.8%;width:18.6%" title="→8/25"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S2-2 일본군 본부</b> <span>바이진 외 2명 · 80%</span></div><div class="g-track"><i class="seg bl" style="left:5.5%;width:44%" title="7/6→8/15"></i><i class="seg un" style="left:49.5%;width:14.2%" title="→8/28"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>브릿지①②</b> <span>권은기 · 30% ⚠️</span></div><div class="g-track"><i class="seg crit" style="left:5.5%;width:27.5%" title="7/6→7/31 D-3, 30%"></i><i class="seg un" style="left:33%;width:27.4%" title="→8/25"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S2-3 설계실</b> <span>바이진 외 2명 · 50%</span></div><div class="g-track"><i class="seg bl" style="left:5.5%;width:44%" title="7/6→8/15"></i><i class="seg un" style="left:49.5%;width:14.2%" title="→8/28"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S2-4 조선군 본부</b> <span>바이진 외 2명 · 50% ⚠️</span></div><div class="g-track"><i class="seg crit" style="left:5.5%;width:27.5%" title="7/6→7/31 D-3, 50%"></i><i class="seg un" style="left:33%;width:31.8%" title="→8/29"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>세트장 공간</b> <span>백승호 · 40% ⚠️</span></div><div class="g-track"><i class="seg bl risk" style="left:25.3%;width:7.7%" title="Blender 7/24→7/31 D-3, 40%"></i><i class="seg un" style="left:33%;width:24.1%" title="Unity →8/22"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S2-1 만남</b> <span>권은기 · 40% ⚠️</span></div><div class="g-track"><i class="seg bl risk" style="left:5.5%;width:27.5%" title="Blender 7/6→7/31 D-3, 40%"></i><i class="seg un" style="left:33%;width:27.5%" title="Unity →8/25"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S2-2 일본군 본부</b> <span>바이진 외 2명 · 80% ⚠️</span></div><div class="g-track"><i class="seg bl risk" style="left:5.5%;width:27.5%" title="Blender 7/6→7/31 D-3, 80%"></i><i class="seg un" style="left:33%;width:30.8%" title="Unity →8/28"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>브릿지①②</b> <span>권은기 · 30% ⚠️</span></div><div class="g-track"><i class="seg bl risk" style="left:5.5%;width:27.5%" title="Blender 7/6→7/31 D-3, 30%"></i><i class="seg un" style="left:33%;width:27.5%" title="Unity →8/25"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S2-3 설계실</b> <span>바이진 외 2명 · 50% ⚠️</span></div><div class="g-track"><i class="seg bl risk" style="left:5.5%;width:27.5%" title="Blender 7/6→7/31 D-3, 50%"></i><i class="seg un" style="left:33%;width:30.8%" title="Unity →8/28"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S2-4 조선군 본부</b> <span>바이진 외 2명 · 50% ⚠️</span></div><div class="g-track"><i class="seg bl risk" style="left:5.5%;width:27.5%" title="Blender 7/6→7/31 D-3, 50%"></i><i class="seg un" style="left:33%;width:31.9%" title="Unity →8/29"></i></div></div>
       <div class="g-row"><div class="g-label"><b>세트장 추가 작업</b> <span>바이진 외 2명</span></div><div class="g-track"><i class="seg bl" style="left:36.3%;width:4.4%" title="8/3→8/7"></i><i class="seg un" style="left:40.7%;width:24.1%" title="→8/29"></i></div></div>
       <div class="g-row"><div class="g-label"><b>리토폴로지·베이크</b> <span>바이진 외 2명</span></div><div class="g-track"><i class="seg bl" style="left:36.3%;width:4.4%" title="8/3→8/7"></i><i class="seg un" style="left:40.7%;width:24.1%" title="→8/29"></i></div></div>
       <div class="g-row"><div class="g-label"><b>작화·판넬 물량</b> <span>권은기 · 마감 미정</span></div><div class="g-track"><i class="seg dash" style="left:36.3%;width:28.5%" title="8/3→마감 미정 (~8/29)"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S3-1 판타지</b> <span>김대권 · 0% ⚠️</span></div><div class="g-track"><i class="seg crit" style="left:20.9%;width:12.1%" title="7/20→7/31 D-3, 0%"></i><i class="seg un" style="left:33%;width:31.8%" title="→8/29"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S3-1 판타지</b> <span>김대권 · 0% ⚠️</span></div><div class="g-track"><i class="seg bl risk" style="left:20.9%;width:12.1%" title="Blender 7/20→7/31 D-3, 0%"></i><i class="seg un" style="left:33%;width:31.9%" title="Unity →8/29"></i></div></div>
       <div class="g-row"><div class="g-label"><b>S3-2 부서진 판옥선</b> <span>바이진 외 2명</span></div><div class="g-track"><i class="seg bl" style="left:44%;width:10.9%" title="8/10→8/20"></i><i class="seg un" style="left:54.9%;width:9.9%" title="→8/29"></i></div></div>
       <div class="g-row"><div class="g-label"><b>S4-1 선소</b> <span>백승호 ②</span></div><div class="g-track"><i class="seg bl" style="left:44%;width:5.5%" title="8/10→8/15"></i><i class="seg un" style="left:49.5%;width:10.9%" title="→8/25"></i></div></div>
       <div class="g-row"><div class="g-label"><b>S4-2 거북선 외부</b> <span>백승호 ①</span></div><div class="g-track"><i class="seg bl" style="left:34.1%;width:7.7%" title="8/1→8/8"></i><i class="seg un" style="left:41.8%;width:18.6%" title="→8/25"></i></div></div>
       <div class="g-row"><div class="g-label"><b>S5 거북선 내부</b> <span>백승호 ③ · 여유 6일</span></div><div class="g-track"><i class="seg bl" style="left:51.6%;width:5.5%" title="8/17→8/22"></i><i class="seg un" style="left:57.1%;width:6.6%" title="→8/28 여유 6일"></i></div></div>
       <div class="g-row"><div class="g-label"><b>S6-1 등갑판</b> <span>백승호 ④ · 8/26 앞당김</span></div><div class="g-track"><i class="seg bl" style="left:59.3%;width:2.2%" title="8/24→8/26"></i><i class="seg un" style="left:61.5%;width:3.3%" title="→8/29 통합 3일"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S6-2 판옥선</b> <span style="color:var(--crit)">🔴 미배치</span></div><div class="g-track"><i class="seg crit" style="left:44%;width:13.1%" title="8/10→8/22 담당 미배치"></i><i class="seg crit-un" style="left:57.1%;width:8.8%" title="→8/30"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S7 학익진 전투</b> <span style="color:var(--crit)">🔴 미배치</span></div><div class="g-track"><i class="seg crit" style="left:41.8%;width:18.6%" title="8/8→8/25 담당 미배치"></i><i class="seg crit-un" style="left:60.4%;width:6.6%" title="→8/31"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>S8 절벽</b> <span style="color:var(--crit)">🔴 미배치</span></div><div class="g-track"><i class="seg crit" style="left:51.6%;width:5.5%" title="8/17→8/22 담당 미배치"></i><i class="seg crit-un" style="left:57.1%;width:8.8%" title="→8/30"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S6-2 판옥선</b> <span style="color:var(--crit)">🔴 미배치</span></div><div class="g-track"><i class="seg bl risk" style="left:44%;width:13.1%" title="Blender 8/10→8/22 담당 미배치"></i><i class="seg un risk" style="left:57.1%;width:8.8%" title="Unity →8/30 담당 미배치"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S7 학익진 전투</b> <span style="color:var(--crit)">🔴 미배치</span></div><div class="g-track"><i class="seg bl risk" style="left:41.8%;width:18.6%" title="Blender 8/8→8/25 담당 미배치"></i><i class="seg un risk" style="left:60.4%;width:6.6%" title="Unity →8/31 담당 미배치"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>S8 절벽</b> <span style="color:var(--crit)">🔴 미배치</span></div><div class="g-track"><i class="seg bl risk" style="left:51.6%;width:5.5%" title="Blender 8/17→8/22 담당 미배치"></i><i class="seg un risk" style="left:57.1%;width:8.8%" title="Unity →8/30 담당 미배치"></i></div></div>
       <div class="g-row"><div class="g-label"><b>S9 180도 영상</b> <span>김대권 외 1 · 보류</span></div><div class="g-track"><i class="seg dash" style="left:13.2%;width:50.5%" title="분량·견적 협의 중 →8/28"></i></div></div>
     </div>
     <div class="legend">
-      <span><i style="background:var(--accent)"></i>Blender 제작</span>
-      <span><i style="background:var(--accent-soft)"></i>Unity 통합 구간</span>
-      <span><i style="background:var(--crit)"></i>위험 (D-3 / 미배치)</span>
+      <span><i style="background:var(--bl)"></i>Blender 제작</span>
+      <span><i style="background:var(--un)"></i>Unity 통합 구간</span>
+      <span><i style="background:var(--bl);box-shadow:0 0 0 2px var(--crit)"></i>위험 (D-3 / 미배치) — 테두리만 빨강</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--warn-soft),var(--warn-soft) 4px,transparent 4px,transparent 7px);border:1px dashed var(--warn)"></i>미정·보류</span>
     </div>
   </div></div>
@@ -158,16 +162,16 @@ strong.crit{ color:var(--crit); }
     <div class="g-axis"><span style="left:0%">7/1</span><span style="left:34.1%">8/1</span><span style="left:68.1%">9/1</span><span style="left:98%">9/30</span></div>
     <div class="g-body">
       <div class="g-lanes g-grid"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:33%"></i><i class="mile" style="left:67%"></i><i class="today" style="left:29.7%"></i></div>
-      <div class="g-row"><div class="g-label"><b>백승호</b> <span>내부 · 순차</span></div><div class="g-track"><i class="seg crit" style="left:0%;width:33%" title="세트장 →7/31 D-3"></i><i class="seg bl" style="left:34.1%;width:7.7%" title="S4-2"></i><i class="seg bl" style="left:44%;width:5.5%" title="S4-1"></i><i class="seg bl" style="left:51.6%;width:5.5%" title="S5"></i><i class="seg bl" style="left:59.3%;width:2.2%" title="S6-1"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>권은기</b> <span>외주 · ~8월 말 ⚠️3중</span></div><div class="g-track"><i class="seg crit" style="left:5.5%;width:27.5%" title="브릿지①② →7/31"></i><i class="seg bl" style="left:33%;width:8.8%" title="S2-1 →8/8"></i><i class="seg dash" style="left:41.8%;width:23%" title="작화·판넬 기간 미정"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>바이진 외 2명</b> <span>외주 · 3인</span></div><div class="g-track"><i class="seg crit" style="left:5.5%;width:27.5%" title="S2-4 →7/31"></i><i class="seg bl" style="left:33%;width:16.5%" title="S2-2·S2-3 →8/15 + 추가·리토 8/3~8/7"></i><i class="seg bl" style="left:49.5%;width:5.4%" title="S3-2 →8/20"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>백승호</b> <span>내부 · 순차</span></div><div class="g-track"><i class="seg bl risk" style="left:25.3%;width:7.7%" title="세트장 7/24→7/31 D-3"></i><i class="seg bl" style="left:34.1%;width:7.7%" title="S4-2"></i><i class="seg bl" style="left:44%;width:5.5%" title="S4-1"></i><i class="seg bl" style="left:51.6%;width:5.5%" title="S5"></i><i class="seg bl" style="left:59.3%;width:2.2%" title="S6-1"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>권은기</b> <span>외주 · ~8월 말 ⚠️3중</span></div><div class="g-track"><i class="seg bl risk" style="left:5.5%;width:27.5%" title="브릿지①② + S2-1 →7/31 D-3 (마감 통일)"></i><i class="seg dash" style="left:36.3%;width:28.5%" title="작화·판넬 8/3~ 기간 미정"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>바이진 외 2명</b> <span>외주 · 3인</span></div><div class="g-track"><i class="seg bl risk" style="left:5.5%;width:27.5%" title="S2-2·S2-3·S2-4 →7/31 D-3 (마감 통일)"></i><i class="seg bl" style="left:36.3%;width:4.4%" title="세트장 추가·리토폴로지 8/3~8/7"></i><i class="seg bl" style="left:44%;width:10.9%" title="S3-2 8/10→8/20"></i></div></div>
       <div class="g-row"><div class="g-label"><b>이태용</b> <span>외주 · ⚠️3중 겸임</span></div><div class="g-track"><i class="seg un" style="left:5.5%;width:51.6%" title="S1 →8/22"></i><i class="seg bl" style="left:15.4%;width:51.6%;top:auto;height:5px;bottom:-1px" title="용 모델·텍·애니 7/15→8/31"></i><i class="seg warn" style="left:49.5%;width:17.5%;height:5px;top:-1px" title="VFX 18종 8/15~8/31"></i></div></div>
-      <div class="g-row"><div class="g-label"><b>김대권</b> <span>외주</span></div><div class="g-track"><i class="seg crit" style="left:20.9%;width:12.1%" title="S3-1 →7/31 0%"></i><i class="seg dash" style="left:33%;width:30.7%" title="S9 보류 →8/28"></i></div></div>
+      <div class="g-row"><div class="g-label"><b>김대권</b> <span>외주</span></div><div class="g-track"><i class="seg bl risk" style="left:20.9%;width:12.1%" title="S3-1 →7/31 D-3, 0%"></i><i class="seg dash" style="left:33%;width:30.7%" title="S9 보류 →8/28"></i></div></div>
       <div class="g-row"><div class="g-label"><b>노석철</b> <span>외주 · 확정 5건</span></div><div class="g-track"><i class="seg bl" style="left:25.3%;width:7.7%" title="가이드 2종 7/24~ 진행중"></i><i class="seg dash" style="left:33%;width:16.5%" title="모캡 후가공·페이셜·갑옷·나대용 — 일정 미정"></i></div></div>
       <div class="g-row"><div class="g-label"><b>장성민</b> <span>유니티 외주 · 단독 ⚠️</span></div><div class="g-track"><i class="seg un" style="left:41.8%;width:25.2%" title="씬 통합 8/8~8/31 (8월 말 14씬 수렴)"></i><i class="seg bl" style="left:64.8%;width:2.2%" title="APK 빌드 8/29~31"></i></div></div>
-      <div class="g-row"><div class="g-label"><b style="color:var(--crit)">🔴 신규 채용</b> <span>미확정</span></div><div class="g-track"><i class="seg crit" style="left:41.8%;width:18.6%" title="S7 8/8~8/25"></i><i class="seg crit" style="left:44%;width:13.1%;height:5px;top:-1px" title="S6-2"></i><i class="seg dash-c" style="left:33%;width:34%;height:5px;top:auto;bottom:-1px" title="캐릭터 17종 — 계획일 미정 (요구 7/31~8/26)"></i></div></div>
+      <div class="g-row"><div class="g-label"><b style="color:var(--crit)">🔴 신규 채용</b> <span>미확정</span></div><div class="g-track"><i class="seg bl risk" style="left:41.8%;width:18.6%" title="S7 8/8~8/25 담당 미배치"></i><i class="seg bl risk" style="left:44%;width:13.1%;height:5px;top:-1px" title="S6-2 담당 미배치"></i><i class="seg dash-c" style="left:33%;width:34%;height:5px;top:auto;bottom:-1px" title="캐릭터 17종 — 계획일 미정 (요구 7/31~8/26)"></i></div></div>
     </div>
-    <div class="legend"><span><i style="background:var(--crit)"></i>마감 임박·미배치</span><span><i style="background:var(--warn)"></i>VFX 트랙</span><span>가는 줄 = 겸임 병행 작업</span></div>
+    <div class="legend"><span><i style="background:var(--bl)"></i>Blender 제작</span><span><i style="background:var(--un)"></i>Unity 통합</span><span><i style="background:var(--bl);box-shadow:0 0 0 2px var(--crit)"></i>마감 임박·미배치 (테두리)</span><span><i style="background:var(--warn)"></i>VFX 트랙</span><span>가는 줄 = 겸임 병행 작업</span></div>
   </div></div>
 </section>
 
@@ -176,12 +180,12 @@ strong.crit{ color:var(--crit); }
   <div class="board">
     <div class="col c-prog"><h3>진행중 <span class="cnt">8</span></h3>
       <div class="bcard"><div class="t">S1 프롤로그 <span class="pill p-ok">80%</span></div><div class="m">이태용 · Unity 8/22</div></div>
-      <div class="bcard"><div class="t">S2-2 일본군 본부 <span class="pill p-ok">80%</span></div><div class="m">바이진 외 2명 · 8/15</div></div>
-      <div class="bcard"><div class="t">S2-3 설계실 <span class="pill p-warn">50%</span></div><div class="m">바이진 외 2명 · 8/15</div></div>
+      <div class="bcard"><div class="t">S2-2 일본군 본부 <span class="pill p-crit">80% · D-3</span></div><div class="m">바이진 외 2명 · 7/31</div></div>
+      <div class="bcard"><div class="t">S2-3 설계실 <span class="pill p-crit">50% · D-3</span></div><div class="m">바이진 외 2명 · 7/31</div></div>
       <div class="bcard"><div class="t">S2-4 조선군 본부 <span class="pill p-crit">50% · D-3</span></div><div class="m">바이진 외 2명 · 7/31</div></div>
       <div class="bcard"><div class="t">세트장 공간 <span class="pill p-crit">40% · D-3</span></div><div class="m">백승호 · 7/31</div></div>
       <div class="bcard"><div class="t">브릿지①② <span class="pill p-crit">30% · D-3</span></div><div class="m">권은기 · 7/31</div></div>
-      <div class="bcard"><div class="t">S2-1 만남 <span class="pill p-warn">40%</span></div><div class="m">권은기 · 8/8</div></div>
+      <div class="bcard"><div class="t">S2-1 만남 <span class="pill p-crit">40% · D-3</span></div><div class="m">권은기 · 7/31</div></div>
       <div class="bcard"><div class="t">S3-1 판타지 <span class="pill p-crit">0% · D-3</span></div><div class="m">김대권 · 7/31</div></div>
     </div>
     <div class="col c-wait"><h3>대기 (8월 착수) <span class="cnt">7</span></h3>
@@ -201,9 +205,9 @@ strong.crit{ color:var(--crit); }
       <div class="bcard"><div class="t">7/31 부분 조정</div><div class="m">팀 진척 확인 후 확정</div></div>
     </div>
     <div class="col c-none"><h3>🔴 미배치 (채용 대기) <span class="cnt">20</span></h3>
-      <div class="bcard"><div class="t">캐릭터 5종 <span class="pill p-crit">요구 7/31 경과</span></div><div class="m">원균·어영담·이순신·갈매기·NPC~19</div></div>
+      <div class="bcard"><div class="t">캐릭터 6종 <span class="pill p-crit">요구 7/31 임박</span></div><div class="m">원균·어영담·이순신·갈매기·NPC~19·자라(S2 마감 통일로 8/15→7/31)</div></div>
       <div class="bcard"><div class="t">병사 (거북선 외부)</div><div class="m">요구 8/8</div></div>
-      <div class="bcard"><div class="t">캐릭터 9종</div><div class="m">나대용S5·자라·화포장·포수·이순신(전투)·방패병·화포병·궁수·후방 빌보드 · 8/15~8/22</div></div>
+      <div class="bcard"><div class="t">캐릭터 8종</div><div class="m">나대용S5·화포장·포수·이순신(전투)·방패병·화포병·궁수·후방 빌보드 · 8/22</div></div>
       <div class="bcard"><div class="t">용 리깅 · 판옥선 장수</div><div class="m">8/25 · 8/26</div></div>
       <div class="bcard"><div class="t">씬 제작 3 <span class="pill p-crit">S7 시작 8/8</span></div><div class="m">S6-2 · S7 · S8</div></div>
       <div class="bcard"><div class="t">애니 적용 (전 씬)</div><div class="m">S2~S9 · 계획일 채용 확정 후</div></div>
