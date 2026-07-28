@@ -1,17 +1,17 @@
 <title>이순신 한산 VR — 제작 상황판</title>
 <style>
 :root{
-  --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F8F8F9;
+  --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F5F5F6; --zebra:#FCFCFD;
   --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1;
   --crit:#B5493F; --crit-soft:#E4C2BD;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#17181B;
+  :root{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#1A1B1E; --zebra:#131416;
     --bl:#75899E; --un:#628079; --mut:#3C3C41; --crit:#C97F77; --crit-soft:#5E3B37; }
 }
-:root[data-theme="light"]{ --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F8F8F9;
+:root[data-theme="light"]{ --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F5F5F6; --zebra:#FCFCFD;
   --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1; --crit:#B5493F; --crit-soft:#E4C2BD; }
-:root[data-theme="dark"]{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#17181B;
+:root[data-theme="dark"]{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#1A1B1E; --zebra:#131416;
   --bl:#75899E; --un:#628079; --mut:#3C3C41; --crit:#C97F77; --crit-soft:#5E3B37; }
 
 *{ box-sizing:border-box; }
@@ -50,7 +50,7 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
   padding:0 4px; font-size:.6rem; line-height:1.55; transform:translateX(-50%); }
 .g-body{ position:relative; }
 .g-row{ display:flex; align-items:flex-start; height:30px; }
-.g-row:nth-child(odd){ background:var(--rule); }
+.g-row:nth-child(odd){ background:var(--zebra); }
 .g-label{ width:176px; flex:none; font-size:.78rem; line-height:1.05; padding-right:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .g-label b{ font-weight:650; } .g-label span{ color:var(--sub); font-size:.69rem; }
 .g-label span::before{ content:" "; }
@@ -65,7 +65,7 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .seg.none{ background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px); border:1px solid var(--crit-soft); }
 .g-lanes{ position:absolute; left:176px; right:12px; top:0; bottom:0; pointer-events:none; }
 .g-lanes i{ position:absolute; top:0; bottom:0; width:1px; background:var(--line); }
-.g-lanes i.mile{ background:var(--ink); opacity:.2; }
+.g-lanes i.mile{ background:repeating-linear-gradient(to bottom,var(--ink) 0 3px,transparent 3px 7px); opacity:.32; }
 .g-lanes i.today{ background:var(--crit); width:1.5px; opacity:.85; }
 .g-miles{ position:relative; height:18px; margin:12px 12px 0 176px; font-size:.67rem; color:var(--sub); }
 .g-miles span{ position:absolute; transform:translateX(-50%); white-space:nowrap; }
@@ -108,7 +108,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 01:28</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 01:32</b></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
