@@ -43,19 +43,19 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 /* ── 간트 ── */
 .gantt{ overflow-x:auto; padding:2px 0 10px; }
 .g-inner{ min-width:840px; }
-.g-axis{ position:relative; height:15px; margin:0 12px 9px 176px; font-size:.68rem; color:var(--sub); }
-.g-axis span{ position:absolute; transform:translateX(-50%); white-space:nowrap; }
+.g-axis{ position:relative; height:28px; margin:0 12px 4px 176px; font-size:.68rem; color:var(--sub); }
+.g-axis span{ position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; }
 .g-axis span:first-child{ transform:none; }
-.g-axis span.now{ background:var(--crit); color:var(--paper); font-weight:700; letter-spacing:0;
-  padding:0 4px; font-size:.6rem; line-height:1.5; transform:translateX(-50%); }
+.g-axis span.now{ top:14px; background:var(--crit); color:var(--paper); font-weight:700; letter-spacing:0;
+  padding:0 4px; font-size:.6rem; line-height:1.55; transform:translateX(-50%); }
 .g-body{ position:relative; }
-.g-row{ display:flex; align-items:flex-start; height:30px; padding-top:6px; }
+.g-row{ display:flex; align-items:flex-start; height:30px; }
 .g-row:nth-child(odd){ background:var(--rule); }
-.g-label{ width:176px; flex:none; font-size:.78rem; line-height:1.15; padding-right:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.g-label{ width:176px; flex:none; font-size:.78rem; line-height:1.05; padding-right:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .g-label b{ font-weight:650; } .g-label span{ color:var(--sub); font-size:.69rem; }
 .g-label span::before{ content:" "; }
-.g-track{ position:relative; flex:1; height:10px; margin-top:2px; margin-right:12px; }
-.tip{ position:absolute; top:-4px; font-size:.66rem; line-height:18px; white-space:nowrap;
+.g-track{ position:relative; flex:1; height:10px; margin-top:1px; margin-right:12px; }
+.tip{ position:absolute; top:-3px; font-size:.66rem; line-height:18px; white-space:nowrap;
   color:var(--sub); font-variant-numeric:tabular-nums; }
 .tip{ padding-left:7px; }
 .seg{ position:absolute; top:0; height:10px; }
@@ -108,8 +108,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="lede">일정 저장소의 마스터 문서에서 그대로 생성합니다.</p>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 (수) 01:06</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 01:28</b></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
