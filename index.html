@@ -2,17 +2,17 @@
 <style>
 :root{
   --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F5F5F6; --zebra:#FCFCFD;
-  --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1;
+  --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1; --dim:#BEBEC3;
   --crit:#B5493F; --crit-soft:#E4C2BD;
 }
 @media (prefers-color-scheme: dark){
   :root{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#1A1B1E; --zebra:#131416;
-    --bl:#75899E; --un:#628079; --mut:#3C3C41; --crit:#C97F77; --crit-soft:#5E3B37; }
+    --bl:#75899E; --un:#628079; --mut:#3C3C41; --dim:#55555C; --crit:#C97F77; --crit-soft:#5E3B37; }
 }
 :root[data-theme="light"]{ --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F5F5F6; --zebra:#FCFCFD;
-  --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1; --crit:#B5493F; --crit-soft:#E4C2BD; }
+  --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1; --dim:#BEBEC3; --crit:#B5493F; --crit-soft:#E4C2BD; }
 :root[data-theme="dark"]{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#1A1B1E; --zebra:#131416;
-  --bl:#75899E; --un:#628079; --mut:#3C3C41; --crit:#C97F77; --crit-soft:#5E3B37; }
+  --bl:#75899E; --un:#628079; --mut:#3C3C41; --dim:#55555C; --crit:#C97F77; --crit-soft:#5E3B37; }
 
 *{ box-sizing:border-box; }
 body{ background:var(--paper); color:var(--ink);
@@ -52,11 +52,15 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .g-row{ display:flex; align-items:flex-start; height:30px; }
 .g-row:nth-child(odd){ background:var(--zebra); }
 .g-label{ width:176px; flex:none; font-size:.78rem; line-height:1.05; padding-right:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.g-label b{ font-weight:600; color:var(--sub); }          /* 기본 = 미착수·비활성 */
-.g-label b.on{ font-weight:650; color:var(--ink); }        /* 진행중 = 활성 */
+.g-label b{ font-weight:600; color:var(--dim); }           /* 기본 = 미착수·비활성 */
+.g-label b.on{ font-weight:700; color:var(--ink); }        /* 진행중 = 활성 */
+.g-label span{ color:var(--dim); }
+.g-row:has(b.on) .g-label span{ color:var(--sub); }
+.tip b{ color:var(--dim); }
+.g-row:has(b.on) .tip b{ color:var(--ink); }
 .g-label b.na{ color:var(--crit); }                        /* 담당 미배치 */
 .g-row:has(b.on) .g-track{ opacity:1; }
-.g-row .g-track{ opacity:.72; }
+.g-row .g-track{ opacity:.48; }
 .g-row:has(b.on) .tip b{ color:var(--ink); } .g-label span{ color:var(--sub); font-size:.69rem; }
 .g-label span::before{ content:" "; }
 .g-track{ position:relative; flex:1; height:10px; margin-top:1px; margin-right:12px; }
@@ -114,7 +118,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 08:24</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 08:27</b></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
