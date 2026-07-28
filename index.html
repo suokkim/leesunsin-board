@@ -122,13 +122,34 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .card ul{ margin:0; padding-left:16px; font-size:.78rem; }
 .card li{ margin:4px 0; line-height:1.45; }
 footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px solid var(--line); padding-top:16px; }
+
+/* ── 모바일 ── */
+@media (max-width:720px){
+  .wrap{ padding:28px 16px 56px; gap:56px; }
+  .wrap > section, .wrap > .cols{ padding-top:26px; }
+  header h1{ font-size:1.5rem; }
+  .summary{ grid-template-columns:1fr; gap:3px 0; }
+  .summary dt{ margin-top:8px; }
+  .g-inner{ min-width:640px; }
+  /* 라벨은 두 줄로 접어 폭을 줄인다 — 잘리지는 않는다 */
+  .g-label{ width:132px; flex-direction:column; align-items:flex-start; gap:1px;
+    padding-right:8px; white-space:normal; }
+  .g-label b, .g-label span{ white-space:normal; word-break:keep-all; }
+  .g-row{ height:44px; }
+  .g-axis{ margin-left:132px; } .g-lanes{ left:132px; } .g-miles{ margin-left:132px; }
+  .g-group b{ width:132px; }
+  .g-miles span{ font-size:.62rem; }
+  .board, .cols{ gap:20px; }
+  .krow{ grid-template-columns:1fr; gap:4px; }
+  .krow .kwhen{ text-align:left; }
+}
 </style>
 
 <div class="wrap">
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 08:42</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 08:43</b></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
