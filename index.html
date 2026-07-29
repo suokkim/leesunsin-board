@@ -50,7 +50,7 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
   padding:0 4px; font-size:.6rem; line-height:1.55; transform:translateX(-50%); }
 .g-body{ position:relative; }
 .g-row{ display:flex; align-items:flex-start; height:30px; }
-.g-row.multi .g-track{ height:19px; }   /* 칸 높이는 그대로, 막대를 얇게 3층으로 */
+.g-row.multi .g-track{ height:22px; }   /* 칸 높이는 그대로, 막대를 얇게 여러 층으로 */
 .g-row:nth-child(odd){ background:var(--zebra); }
 .g-group{ display:flex; align-items:center; height:26px; margin-top:14px; }
 .g-group b{ width:300px; flex:none; padding-right:12px; font-size:.67rem; font-weight:700;
@@ -85,6 +85,8 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .seg.ch{ background:var(--ch); }
 .seg.vfx{ background:var(--vfx); }
 .seg.vid{ background:var(--vid); }
+.seg.wait{ opacity:.34; }                                   /* 아직 시작 전 */
+.seg.tbd{ opacity:.6; background-image:repeating-linear-gradient(45deg,transparent 0 3px,var(--paper) 3px 5px); }  /* 일정 미정 */
 .seg.open{ background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px); border:1px solid var(--mut); }
 .seg.none{ background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px); border:1px solid var(--crit-soft); }
 .g-lanes{ position:absolute; left:300px; right:12px; top:0; bottom:0; pointer-events:none; }
@@ -153,7 +155,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 09:01</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 09:05</b></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -389,38 +391,38 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 
 <section>
   <h2>사람별 타임라인</h2>
-  <p class="sub">한 사람이 같은 시기에 몇 가지를 안고 있는지 보는 표입니다. 동시에 진행하는 작업은 얇은 막대를 위아래로 나눠 그렸고, 색이 작업 종류를 뜻합니다.</p>
+  <p class="sub"><b>한 사람에게 일이 얼마나 몰려 있는지 보는 표입니다.</b> 같은 시기에 겹치는 층이 많을수록 부하가 큽니다. 색은 작업 종류, 진하기는 상태를 뜻합니다 — 진한 막대가 지금 돌아가는 일, 흐린 막대는 아직 시작 전, 사선이 들어간 막대는 일정이 정해지지 않은 일입니다.</p>
   <div class="gantt"><div class="g-inner">
     <div class="g-axis"><span style="left:0%">7월</span><span style="left:34.1%">8월</span><span style="left:68.1%">9월</span><span class="now" style="left:30.8%">29</span></div>
     <div class="g-body">
 <div class="g-lanes"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="mile" style="left:99%"></i><i class="today" style="left:30.8%"></i></div>
 
-      <div class="g-row multi"><div class="g-label"><b class="on">백승호</b> <span>내부 · 순차</span></div>
-        <div class="g-track"><i class="seg bl" style="left:25.3%;width:15.4%;top:0px;height:5px" title="세트장 공간 — 내벽·바닥·천장·조명&#10;7/24 → 8/7 · 진행 40%"></i><i class="seg bl" style="left:41.8%;width:2.2%;top:0px;height:5px" title="S4-2 거북선 외부 — 전체 공간 수정 반영&#10;8/8 → 8/10"></i><i class="seg bl" style="left:44%;width:5.5%;top:0px;height:5px" title="S4-1 순천부 비밀 선소 — 대나무 숲 공간 제작&#10;8/10 → 8/15"></i><i class="seg bl" style="left:59.3%;width:2.2%;top:0px;height:5px" title="S6-1 등갑판 — 돛대 수정 반영&#10;8/24 → 8/26"></i><i class="tip e" style="left:61.5%"><b>8/26</b> · 33일 · 순차 4건</i></div></div>
+      <div class="g-row multi"><div class="g-label"><b class="on">백승호</b> <span>내부 · 1인 순차</span></div>
+        <div class="g-track"><i class="seg bl" style="left:25.3%;width:15.4%;top:0px;height:4px" title="세트장 공간 — 진행중&#10;7/24 → 8/7 · 진행 40%"></i><i class="seg bl wait" style="left:41.8%;width:2.2%;top:6px;height:4px" title="S4-2 거북선 외부 — 대기&#10;8/8 → 8/10 · 전체 공간 수정 반영"></i><i class="seg bl wait" style="left:44%;width:5.5%;top:6px;height:4px" title="S4-1 순천부 비밀 선소 — 대기&#10;8/10 → 8/15 · 대나무 숲 공간"></i><i class="seg bl wait" style="left:59.3%;width:2.2%;top:6px;height:4px" title="S6-1 등갑판 — 대기&#10;8/24 → 8/26 · 돛대 수정 반영"></i><i class="tip e" style="left:61.5%"><b>8/26</b> · 동시 1건</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b class="on">권은기</b> <span>외주 · 9월 불가</span></div>
-        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%;top:0px;height:5px" title="S2-1 만남 + 브릿지①② (작화·판넬 포함)&#10;판넬 병사 기믹 6종 + 벽화·작화 5종&#10;7/6 → 8/7 · 8/8 이후 배정 없음"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일 · 진행중</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%;top:0px;height:4px" title="S2-1 만남 + 브릿지①② (작화·판넬 포함) — 진행중&#10;판넬 병사 기믹 6종 + 벽화·작화 5종&#10;7/6 → 8/7 · 물량이 8/7 하루에 몰림"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 동시 1건</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b class="on">바이진 외 2명</b> <span>외주 · 3인 팀</span></div>
-        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%;top:0px;height:5px" title="S2-2 · S2-3 · S2-4 세트장 씬 동시 진행&#10;7/6 → 8/7"></i><i class="seg bl" style="left:40.7%;width:7.7%;top:0px;height:5px" title="세트장 추가 작업 (엘리베이터·2층 구조물 + S3-2)&#10;8/7 → 8/14"></i><i class="seg bl" style="left:40.7%;width:15.4%;top:7px;height:5px" title="리토폴로지 · 텍스처 베이크 + 세트장 전체 라이트 베이크&#10;8/7 → 8/21 (2주)"></i><i class="tip e" style="left:56.1%"><b>8/21</b> · 46일 · 진행중</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%;top:0px;height:4px" title="S2-2 · S2-3 · S2-4 세트장 씬 — 진행중&#10;7/6 → 8/7 · 3인이 씬 동시 진행"></i><i class="seg bl wait" style="left:40.7%;width:7.7%;top:6px;height:4px" title="세트장 추가 작업 — 대기&#10;8/7 → 8/14"></i><i class="seg bl wait" style="left:40.7%;width:15.4%;top:12px;height:4px" title="리토폴로지·베이크 + 세트장 전체 라이트 베이크 — 대기&#10;8/7 → 8/21 (2주)"></i><i class="tip e" style="left:56.1%"><b>8/21</b> · 최대 2건 동시</i></div></div>
 
-      <div class="g-row multi"><div class="g-label"><b class="on">이태용</b> <span>외주 · 3중 겸임</span></div>
-        <div class="g-track"><i class="seg un" style="left:5.5%;width:9.9%;top:0px;height:5px" title="S1 프롤로그 — Unity 직접 제작&#10;7/6 → 7/15 진행 후 미완"></i><i class="seg open" style="left:15.4%;width:41.7%;top:0px;height:5px" title="S1 미완 구간 — 남은 분량·일정 미정&#10;Unity 마감 8/22"></i><i class="seg ch" style="left:15.4%;width:26.4%;top:7px;height:5px" title="용 — 모델링·텍스처링&#10;7/15 → 8/8 · 모델링 진행중"></i><i class="seg ch" style="left:41.8%;width:25.2%;top:7px;height:5px" title="용 — 애니메이션&#10;8/8 → 8/31"></i><i class="seg vfx" style="left:49.5%;width:17.5%;top:14px;height:5px" title="VFX 18종&#10;8/15 후레쉬부터 → 8/31"></i><i class="tip e" style="left:67.0%"><b>8/31</b> · 56일 · 3중 겸임</i></div></div>
+      <div class="g-row multi"><div class="g-label"><b class="on">이태용</b> <span>외주 · 과부하</span></div>
+        <div class="g-track"><i class="seg un" style="left:5.5%;width:9.9%;top:0px;height:4px" title="S1 프롤로그 — 7/15까지 진행&#10;Unity 직접 제작"></i><i class="seg un tbd" style="left:15.4%;width:41.7%;top:0px;height:4px" title="S1 미완 구간 — 남은 분량·일정 미정&#10;Unity 마감 8/22"></i><i class="seg ch" style="left:15.4%;width:26.4%;top:6px;height:4px" title="용 — 모델링·텍스처링 — 진행중&#10;7/15 → 8/8"></i><i class="seg ch wait" style="left:41.8%;width:25.2%;top:6px;height:4px" title="용 — 애니메이션 — 대기&#10;8/8 → 8/31 · 리깅(미배치)이 선행"></i><i class="seg vfx wait" style="left:49.5%;width:17.5%;top:12px;height:4px" title="VFX 18종 — 대기&#10;8/15 후레쉬부터 → 8/31"></i><i class="tip e" style="left:67.0%"><b>8/31</b> · 최대 3건 동시</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b class="on">김대권</b> <span>외주 · 영상</span></div>
-        <div class="g-track"><i class="seg vid" style="left:20.9%;width:19.8%;top:0px;height:5px" title="S3-1 판타지(학익진) 영상&#10;7/20 → 8/7 · 스타일 프레임만 완료"></i><i class="seg vid" style="left:40.7%;width:23%;top:0px;height:5px" title="S9 «한산» 180도 영상&#10;8/7 착수 → 8/28 · 분량·견적 협의 중"></i><i class="tip e" style="left:63.7%"><b>8/28</b> · 39일 · 진행중</i></div></div>
+        <div class="g-track"><i class="seg vid" style="left:20.9%;width:19.8%;top:0px;height:4px" title="S3-1 판타지 영상 — 진행중&#10;7/20 → 8/7 · 스타일 프레임만 완료"></i><i class="seg vid wait" style="left:40.7%;width:23%;top:6px;height:4px" title="S9 «한산» 180도 영상 — 대기&#10;8/7 착수 → 8/28 · 분량·견적 협의 중"></i><i class="tip e" style="left:63.7%"><b>8/28</b> · 동시 1건</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b class="on">노석철</b> <span>외주 · 캐릭터</span></div>
-        <div class="g-track"><i class="seg ch" style="left:25.3%;width:15.4%;top:0px;height:5px" title="가이드 감독관 룩 — 모델링 진행중&#10;7/24 → 8/7"></i><i class="seg ch" style="left:25.3%;width:15.4%;top:7px;height:5px" title="가이드 기록관 룩 — 모델링 진행중&#10;7/24 → 8/7"></i><i class="seg fin" style="left:25.3%;width:5.5%;top:14px;height:5px" title="나대용(리깅까지) · 와키자카 갑옷(텍스처링까지) 완료&#10;2026-07-29 확인"></i><i class="seg open" style="left:40.7%;width:26.3%;top:14px;height:5px" title="모캡 후가공 · 페이셜 클린업&#10;외부 촬영이 끝나야 착수 — 촬영일 미정"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 4건 진행·대기</i></div></div>
+        <div class="g-track"><i class="seg ch" style="left:25.3%;width:15.4%;top:0px;height:4px" title="가이드 감독관 룩 — 진행중 (모델링)&#10;7/24 → 8/7"></i><i class="seg ch" style="left:25.3%;width:15.4%;top:6px;height:4px" title="가이드 기록관 룩 — 진행중 (모델링)&#10;7/24 → 8/7"></i><i class="seg fin" style="left:25.3%;width:5.5%;top:12px;height:4px" title="나대용 · 와키자카 갑옷 — 완료&#10;2026-07-29 확인"></i><i class="seg ch tbd" style="left:40.7%;width:26.3%;top:18px;height:4px" title="모캡 후가공 · 페이셜 클린업 — 일정 미정&#10;외부 촬영이 끝나야 착수, 촬영일 미정"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 동시 2건</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b>장성민</b> <span>유니티 외주 · 단독</span></div>
-        <div class="g-track"><i class="seg un" style="left:33%;width:33.9%;top:0px;height:5px" title="씬별 Unity 통합 — 전 씬&#10;7/31 첫 인계 → 8/31"></i><i class="seg un" style="left:64.8%;width:2.2%;top:7px;height:5px" title="통합 APK 빌드 · 성능 프로파일링&#10;8/29 → 8/31"></i><i class="tip e" style="left:67.0%"><b>8/31</b> · 31일 · 대기</i></div></div>
+        <div class="g-track"><i class="seg un wait" style="left:33%;width:33.9%;top:0px;height:4px" title="씬별 Unity 통합 — 대기&#10;7/31 첫 인계 → 8/31 · 8월 말에 몰림"></i><i class="seg un wait" style="left:64.8%;width:2.2%;top:6px;height:4px" title="통합 APK 빌드 · 프로파일링 — 대기&#10;8/29 → 8/31"></i><i class="tip e" style="left:67.0%"><b>8/31</b> · 8월 말 집중</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b class="na">신규 채용</b> <span>미확정</span></div>
-        <div class="g-track"><i class="seg none" style="left:30.8%;width:34%;top:0px;height:5px" title="잔여 캐릭터 17종&#10;필요일 8/7 ~ 8/26"></i><i class="seg none" style="left:41.8%;width:18.6%;top:7px;height:5px" title="S7 학익진 전투 제작&#10;8/8 → 8/25 · 최난도"></i><i class="seg none" style="left:44%;width:13.1%;top:14px;height:5px" title="S6-2 판옥선 제작&#10;8/10 → 8/22"></i><i class="tip e" style="left:64.8%"><b>8/31</b> · 미배치</i></div></div>
+        <div class="g-track"><i class="seg none" style="left:30.8%;width:34%;top:0px;height:4px" title="잔여 캐릭터 17종 — 미배치&#10;필요일 8/7 ~ 8/26"></i><i class="seg none" style="left:41.8%;width:18.6%;top:6px;height:4px" title="S7 학익진 전투 제작 — 미배치&#10;8/8 → 8/25 · 최난도"></i><i class="seg none" style="left:44%;width:13.1%;top:12px;height:4px" title="S6-2 판옥선 제작 — 미배치&#10;8/10 → 8/22"></i><i class="tip e" style="left:64.8%"><b>8/31</b> · 3건 미배치</i></div></div>
     </div>
     <div class="g-miles"><span style="left:67%">8/31 1차 APK</span><span style="left:83.5%">9/15 2차 테스트</span><span class="end" style="left:99%">9/30 최종 납품</span></div>
-    <div class="legend"><span><i style="background:var(--bl)"></i>Blender 제작</span><span><i style="background:var(--un)"></i>Unity</span><span><i style="background:var(--ch)"></i>캐릭터·동물</span><span><i style="background:var(--vfx)"></i>VFX</span><span><i style="background:var(--vid)"></i>영상</span><span><i style="background:var(--mut)"></i>완료</span><span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>미배치</span><span>진한 제목 = 진행중</span></div>
+    <div class="legend"><span><i style="background:var(--bl)"></i>Blender</span><span><i style="background:var(--un)"></i>Unity</span><span><i style="background:var(--ch)"></i>캐릭터·동물</span><span><i style="background:var(--vfx)"></i>VFX</span><span><i style="background:var(--vid)"></i>영상</span><span><i style="background:var(--bl);opacity:.34"></i>시작 전</span><span><i style="background:var(--bl);opacity:.6;background-image:repeating-linear-gradient(45deg,transparent 0 3px,var(--paper) 3px 5px)"></i>일정 미정</span><span><i style="background:var(--mut)"></i>완료</span><span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>미배치</span></div>
   </div></div>
 </section>
 
