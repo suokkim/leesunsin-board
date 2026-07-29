@@ -50,11 +50,12 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .gantt{ overflow-x:auto; padding:2px 0 10px; }
 .g-inner{ min-width:1000px; }
 .seg[data-tip]{ cursor:help; }
-.g-axis{ position:relative; height:28px; margin:0 12px 4px 300px; font-size:.68rem; color:var(--sub); }
+.g-axis{ position:relative; height:28px; margin:0 12px 0 300px; font-size:.68rem; color:var(--sub); }
 .g-axis span{ position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; }
 .g-axis span:first-child{ transform:none; }
-.g-axis span.now{ top:14px; background:var(--crit); color:var(--paper); font-weight:700; letter-spacing:0;
-  padding:0 4px; font-size:.6rem; line-height:1.55; transform:translateX(-50%); }
+/* 오늘 날짜 = 선 바로 위에 붙이고, 선 기준 앞(왼쪽) 정렬 (2026-07-29) */
+.g-axis span.now{ top:auto; bottom:0; background:var(--crit); color:var(--paper); font-weight:700; letter-spacing:0;
+  padding:0 5px; font-size:.6rem; line-height:1.5; transform:none; margin-left:-1px; border-radius:2px 2px 0 0; }
 .g-body{ position:relative; }
 .g-row{ display:flex; align-items:flex-start; height:30px; }
 .g-row.multi .g-track{ height:22px; }   /* 칸 높이는 그대로, 막대를 얇게 여러 층으로 */
@@ -99,7 +100,10 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .g-lanes{ position:absolute; left:300px; right:12px; top:0; bottom:0; pointer-events:none; }
 .g-lanes i{ position:absolute; top:0; bottom:0; width:1px; background:var(--line); }
 .g-lanes i.mile{ background:repeating-linear-gradient(to bottom,var(--ink) 0 2px,transparent 2px 7px); opacity:.13; }
-.g-lanes i.today{ background:var(--crit); width:1.5px; opacity:.85; }
+/* 오늘 선 — 눈금·막대·마일스톤 구간을 한 줄로 잇는다 (2026-07-29) */
+.g-lanes i.today{ background:var(--crit); width:1.5px; opacity:.85; top:-13px; bottom:-30px; }
+/* 구역 사이 여백을 잇는 연한 연장선 (스크립트가 그린다) */
+.todaylink{ position:absolute; width:1.5px; background:var(--crit); opacity:.17; pointer-events:none; z-index:0; }
 .g-miles{ position:relative; height:18px; margin:12px 12px 0 300px; font-size:.67rem; color:var(--sub); }
 .g-miles span{ position:absolute; transform:translateX(-50%); white-space:nowrap; }
 .g-miles span.end{ transform:translateX(-100%); }
@@ -162,7 +166,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 10:55</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 11:00</b></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -533,6 +537,35 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     if (e.target.closest('.seg[data-tip]')) tip.style.display = 'none';
   });
   addEventListener('scroll', function(){ tip.style.display = 'none'; }, true);
+})();
+
+// 오늘 선 — 구역과 구역 사이 여백에도 연한 선을 이어 한 줄로 보이게 (2026-07-29 감독님 요청)
+(function(){
+  function draw(){
+    document.querySelectorAll('.todaylink').forEach(function(n){ n.remove(); });
+    var marks = [];
+    document.querySelectorAll('.gantt').forEach(function(g){
+      var t = g.querySelector('.g-lanes i.today');
+      if (!t) return;
+      var r = t.getBoundingClientRect(), gr = g.getBoundingClientRect();
+      if (r.left < gr.left || r.left > gr.right) return;   // 가로 스크롤로 가려진 구역은 건너뛴다
+      marks.push({ x:r.left + scrollX, top:gr.top + scrollY, bottom:gr.bottom + scrollY });
+    });
+    for (var i = 0; i < marks.length - 1; i++) {
+      var a = marks[i], b = marks[i + 1];
+      if (b.top <= a.bottom) continue;
+      var d = document.createElement('div');
+      d.className = 'todaylink';
+      d.style.left = a.x + 'px';
+      d.style.top = a.bottom + 'px';
+      d.style.height = (b.top - a.bottom) + 'px';
+      document.body.appendChild(d);
+    }
+  }
+  addEventListener('load', draw);
+  addEventListener('resize', draw);
+  document.querySelectorAll('.gantt').forEach(function(g){ g.addEventListener('scroll', draw); });
+  draw();
 })();
 </script>
 
