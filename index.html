@@ -136,15 +136,6 @@ header .stamp i.ago{ font-style:normal; }
 .stage.now{ color:var(--ink); font-weight:650; box-shadow:inset 0 -1px 0 var(--sub); }
 .ksum{ font-size:.75rem; color:var(--sub); line-height:1.55; padding:16px 0 2px; border-top:1px solid var(--line); margin-top:4px; }
 
-/* ── 상태 보드 ── */
-.board{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:26px; align-items:start; }
-.col{ padding:0; }
-.col h3{ margin:0 0 10px; padding-bottom:8px; border-bottom:1px solid var(--line); font-size:.78rem; font-weight:650; display:flex; justify-content:space-between; }
-.col h3 .cnt{ color:var(--sub); font-weight:600; font-size:.73rem; }
-.bcard{ padding:7px 0; font-size:.77rem; border-top:1px solid var(--rule); }
-.bcard:first-of-type{ border-top:none; padding-top:2px; }
-.bcard .t{ font-weight:650; }
-.bcard .m{ color:var(--sub); font-size:.69rem; margin-top:2px; line-height:1.38; }
 
 .card{ padding:0; }
 .card h3{ margin:0 0 10px; padding-bottom:8px; border-bottom:1px solid var(--line); font-size:.82rem; font-weight:650; }
@@ -172,7 +163,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   .g-lanes i{ opacity:.5; }
   .g-lanes i.today{ width:1px; opacity:.55; }
   .g-lanes i.mile{ opacity:.09; }
-  .board, .cols{ gap:20px; }
+  .cols{ gap:20px; }
   .krow{ grid-template-columns:1fr; gap:4px; }
   .krow .kwhen{ text-align:left; }
 }
@@ -182,7 +173,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:21</b> <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 21:49</b> <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -451,47 +442,6 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     <div class="g-miles"><span style="left:67%">8/31 1차 APK</span><span style="left:83.5%">9/15 2차 테스트</span><span class="end" style="left:99%">9/30 최종 납품</span></div>
     <div class="legend"><span><i style="background:var(--bl)"></i>Blender</span><span><i style="background:var(--un)"></i>Unity</span><span><i style="background:var(--ch)"></i>캐릭터·동물</span><span><i style="background:var(--vfx)"></i>VFX</span><span><i style="background:var(--vid)"></i>영상</span><span><i style="background:var(--bl);opacity:.34"></i>시작 전</span><span><i style="background:var(--bl);opacity:.6;background-image:repeating-linear-gradient(45deg,transparent 0 3px,var(--paper) 3px 5px)"></i>일정 미정</span><span><i style="background:var(--mut)"></i>완료</span><span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>미배치</span></div>
   </div></div>
-</section>
-
-<section>
-  <h2>상태 보드</h2>
-  <div class="board">
-    <div class="col"><h3><span>완료</span> <span class="cnt">1</span></h3>
-      <div class="bcard"><div class="t">S5 거북선 내부</div><div class="m">백승호 · 세트장 착수 전 제작 완료 · 남은 것은 최종 마스터</div></div>
-    </div>
-    <div class="col"><h3><span>진행중</span> <span class="cnt">7</span></h3>
-      <div class="bcard"><div class="t">세트장 공간</div><div class="m">백승호 · 7/24 착수 · 8/7</div></div>
-      <div class="bcard"><div class="t">S3-1 판타지</div><div class="m">김대권 · 8/7 · 스타일 프레임만 완료</div></div>
-      <div class="bcard"><div class="t">S2-1 만남</div><div class="m">권은기 · 8/7</div></div>
-      <div class="bcard"><div class="t">브릿지①②</div><div class="m">권은기 · 8/7</div></div>
-      <div class="bcard"><div class="t">S2-2 일본군 본부</div><div class="m">바이진 외 2명 · 8/7</div></div>
-      <div class="bcard"><div class="t">S2-3 설계실</div><div class="m">바이진 외 2명 · 8/7</div></div>
-      <div class="bcard"><div class="t">S2-4 조선군 본부</div><div class="m">바이진 외 2명 · 8/7</div></div>
-      <div class="bcard"><div class="t">S1 프롤로그</div><div class="m">이태용 · 유니티 작업 7/15까지 진행 · <b>미완</b> — 남은 분량 미정 · Unity 마감 8/22</div></div>
-    </div>
-    <div class="col"><h3><span>8월 착수</span> <span class="cnt">5</span></h3>
-      <div class="bcard"><div class="t">세트장 추가 작업</div><div class="m">바이진 외 2명 · 8/7~8/14 · 엘리베이터·2층 구조물 + S3-2 부서진 판옥선</div></div>
-      <div class="bcard"><div class="t">리토폴로지·베이크</div><div class="m">바이진 외 2명 · 8/7~8/21 · 2주</div></div>
-      <div class="bcard"><div class="t">S4-2 → S4-1 → S6-1</div><div class="m">백승호 순차 · 8/8~8/26 · S5 완료로 8/17~8/22 비어 있음</div></div>
-      <div class="bcard"><div class="t">Unity 통합 (전 씬)</div><div class="m">장성민 · 7/31부터 인계 시작</div></div>
-      <div class="bcard"><div class="t">S9 «한산» 180도 영상</div><div class="m">김대권 외 1명 · S3-1 완료 후 8/7 착수 → 8/28 · 분량 배분·견적 협의 중</div></div>
-      <div class="bcard"><div class="t">VFX 18종</div><div class="m">이태용 · 첫 마감 8/15 후레쉬, 이후 8/22</div></div>
-    </div>
-    <div class="col"><h3><span>보류·확인</span> <span class="cnt">4</span></h3>
-      <div class="bcard"><div class="t">갈매기·자라 애니</div><div class="m">배정 보류 · 채용 확정 시 재논의</div></div>
-      <div class="bcard"><div class="t">사운드 4건</div><div class="m">외주 검토 착수 · 상한 9/15</div></div>
-      <div class="bcard"><div class="t">와키자카 갑옷</div><div class="m">기존 완료 소품과 같은 것인지 확인 필요</div></div>
-      <div class="bcard"><div class="t">세트장 1차 마감 범위</div><div class="m">S2·S3-1이 8/7로 빠져 7/31에는 세트장 공간만 남음</div></div>
-    </div>
-    <div class="col"><h3><span>담당 미배치</span> <span class="cnt">20</span></h3>
-      <div class="bcard"><div class="t">캐릭터 6종</div><div class="m">원균 · 어영담 · 이순신(세트장) · 조선군 NPC 약 19 · 자라 · 요구 8/7 / 갈매기는 S3-1 기준 7/31</div></div>
-      <div class="bcard"><div class="t">병사 (거북선 외부)</div><div class="m">요구 8/8</div></div>
-      <div class="bcard"><div class="t">캐릭터 8종</div><div class="m">나대용 S5 · 화포장 · 포수 · 이순신(전투) · 방패병 · 화포병 · 궁수 · 후방 빌보드 · 요구 8/22</div></div>
-      <div class="bcard"><div class="t">용 리깅 · 판옥선 장수</div><div class="m">요구 8/25 · 8/26</div></div>
-      <div class="bcard"><div class="t">씬 제작 3종</div><div class="m">S6-2 · S7 · S8 · S7은 8/8 시작</div></div>
-      <div class="bcard"><div class="t">애니 적용 (전 씬)</div><div class="m">S2~S9 · 계획일은 채용 확정 후</div></div>
-    </div>
-  </div>
 </section>
 
 <div class="cols">
