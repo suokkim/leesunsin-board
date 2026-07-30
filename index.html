@@ -111,9 +111,8 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .seg.open{ background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px); border:1px solid var(--mut); }
 .seg.none{ background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px); border:1px solid var(--crit-soft); }
 .seg.late{ box-shadow:0 0 0 1.5px var(--crit); }             /* 마감이 오늘보다 과거 + 미완 — 자동 표기 */
-/* 진행률 채움 — 막대 = 기간, 진한 부분 = 실제 진행률. 남은 몫은 배경색 베일로 덮는다 (2026-07-31) */
+/* 지나간 기간 채움 — 오늘까지가 진한 부분, 남은 기간은 배경색 베일로 흐리게 (2026-07-31) */
 .seg > i.unfill{ position:absolute; top:0; right:0; bottom:0; background:var(--paper); opacity:.62; pointer-events:none; }
-.seg > i.pmark{ position:absolute; top:-2px; bottom:-2px; width:1px; background:var(--ink); opacity:.32; pointer-events:none; }
 .summary dd i.dday{ font-style:normal; color:var(--crit); font-size:.66rem; font-weight:650; margin-left:2px; }
 .summary dd i.dday.past{ color:var(--sub); }
 header .stamp i.ago{ font-style:normal; }
@@ -181,7 +180,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 01:15</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 01:19</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합 · <b>8/21</b> 라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -202,25 +201,25 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
       <div class="g-group"><b>세트장 — 제작 8/7 · 베이크 8/14</b><i></i></div>
 
       <div class="g-row grp"><div class="g-label"><b class="on">세트장 공간</b> <span>백승호</span></div>
-        <div class="g-track"><i class="seg bl" data-prog="40" style="left:25.3%;width:7.7%" data-tip="전체 세트장 공간 · 내벽·바닥·천장·조명&#10;담당 백승호 (내부 유일 인력, 1인 순차)&#10;제작 7/24 → 7/31 · Unity 마감 8/22&#10;물량: 신규 제작 · 도그빌식 구역 조명&#10;2026-07-30 감독님: 이번 주 금요일(7/31) 마무리 — 다음 주부터 S4-1 착수"></i><i class="tip e" style="left:33%"><b>7/31</b> · 7일</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:25.3%;width:7.7%" data-tip="전체 세트장 공간 · 내벽·바닥·천장·조명&#10;담당 백승호 (내부 유일 인력, 1인 순차)&#10;제작 7/24 → 7/31 · Unity 마감 8/22&#10;물량: 신규 제작 · 도그빌식 구역 조명&#10;2026-07-30 감독님: 이번 주 금요일(7/31) 마무리 — 다음 주부터 S4-1 착수"></i><i class="tip e" style="left:33%"><b>7/31</b> · 7일</i></div></div>
 
       <div class="g-row grp"><div class="g-label"><b class="on">S2-1 만남</b> <span>권은기</span></div>
-        <div class="g-track"><i class="seg bl" data-prog="40" style="left:5.5%;width:35.2%" data-tip="S2-1 만남 · 세트장 1층 (다큐 감독과 첫 대면)&#10;담당 권은기 (외주, 9월 불가)&#10;제작 7/6 → 8/7 · Unity 마감 8/25&#10;오브젝트: 세트장 소품, 출입증 전달"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%" data-tip="S2-1 만남 · 세트장 1층 (다큐 감독과 첫 대면)&#10;담당 권은기 (외주, 9월 불가)&#10;제작 7/6 → 8/7 · Unity 마감 8/25&#10;오브젝트: 세트장 소품, 출입증 전달"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
 
       <div class="g-row grp"><div class="g-label"><b class="on">브릿지①②</b> <span>권은기 · 작화·판넬 포함</span></div>
-        <div class="g-track"><i class="seg bl" data-prog="30" style="left:5.5%;width:35.2%" data-tip="중간 브릿지 ① 일본군→설계실 · ② 설계실→조선군 회의실&#10;담당 권은기 (외주)&#10;제작 7/6 → 8/7 · Unity 마감 8/25&#10;포함 물량: 외부 벽면 작화 + 작화·판넬 전량&#10;  · 판넬 병사 기믹 6종 (복도 팝업 4 + 문지기 2)&#10;  · 벽화·작화 5종 (밤바다·흙길·거북선 원경·숲 판넬·나대용 뒤 벽화)&#10;VFX: 후레쉬 라이트(마감 8/15), 화로 불&#10;물량이 8/7 한 날짜에 몰림"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%" data-tip="중간 브릿지 ① 일본군→설계실 · ② 설계실→조선군 회의실&#10;담당 권은기 (외주)&#10;제작 7/6 → 8/7 · Unity 마감 8/25&#10;포함 물량: 외부 벽면 작화 + 작화·판넬 전량&#10;  · 판넬 병사 기믹 6종 (복도 팝업 4 + 문지기 2)&#10;  · 벽화·작화 5종 (밤바다·흙길·거북선 원경·숲 판넬·나대용 뒤 벽화)&#10;VFX: 후레쉬 라이트(마감 8/15), 화로 불&#10;물량이 8/7 한 날짜에 몰림"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
 
       <div class="g-row grp"><div class="g-label"><b class="on">S2-2 일본군 본부</b> <span>바이진 외 2명</span></div>
-        <div class="g-track"><i class="seg bl" data-prog="80" style="left:5.5%;width:35.2%" data-tip="S2-2 일본군 본부 회의실 · 세트장 1층&#10;담당 바이진 외 2명 (블렌더 외주 3인)&#10;제작 7/6 → 8/7 · Unity 마감 8/28&#10;오브젝트: 와키자카 갑옷(리지드), 출구 문 열림&#10;VFX: 투구 내부 일렁이는 빛&#10;갑옷은 노석철 텍스처링까지 완료"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%" data-tip="S2-2 일본군 본부 회의실 · 세트장 1층&#10;담당 바이진 외 2명 (블렌더 외주 3인)&#10;제작 7/6 → 8/7 · Unity 마감 8/28&#10;오브젝트: 와키자카 갑옷(리지드), 출구 문 열림&#10;VFX: 투구 내부 일렁이는 빛&#10;갑옷은 노석철 텍스처링까지 완료"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
 
       <div class="g-row grp"><div class="g-label"><b class="on">S2-3 설계실</b> <span>바이진 외 2명</span></div>
-        <div class="g-track"><i class="seg bl" data-prog="50" style="left:5.5%;width:35.2%" data-tip="S2-3 거북선 설계실 · 세트장 1층&#10;담당 바이진 외 2명&#10;제작 7/6 → 8/7 · Unity 마감 8/28&#10;오브젝트: 창문 열고 닫히기, 비밀통로 문 열림&#10;VFX: 후레쉬 라이트&#10;나대용은 노석철 리깅까지 완료"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%" data-tip="S2-3 거북선 설계실 · 세트장 1층&#10;담당 바이진 외 2명&#10;제작 7/6 → 8/7 · Unity 마감 8/28&#10;오브젝트: 창문 열고 닫히기, 비밀통로 문 열림&#10;VFX: 후레쉬 라이트&#10;나대용은 노석철 리깅까지 완료"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
 
       <div class="g-row grp"><div class="g-label"><b class="on">S2-4 조선군 본부</b> <span>바이진 외 2명</span></div>
-        <div class="g-track"><i class="seg bl" data-prog="50" style="left:5.5%;width:35.2%" data-tip="S2-4 조선군 본부 회의실 · 세트장 1층 (회의실 4개 공간 모두 1층)&#10;담당 바이진 외 2명&#10;제작 7/6 → 8/7 · Unity 마감 8/29&#10;오브젝트: 지도 (견내량→한산 궤적)"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%" data-tip="S2-4 조선군 본부 회의실 · 세트장 1층 (회의실 4개 공간 모두 1층)&#10;담당 바이진 외 2명&#10;제작 7/6 → 8/7 · Unity 마감 8/29&#10;오브젝트: 지도 (견내량→한산 궤적)"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 32일</i></div></div>
 
       <div class="g-row grp"><div class="g-label"><b class="on">S3-1 판타지</b> <span>김대권</span></div>
-        <div class="g-track"><i class="seg bl" data-prog="0" style="left:20.9%;width:19.8%" data-tip="S3-1 이순신 공간 — 판타지(학익진) · 영상 제작 · 세트장 2층 중앙에서 관람&#10;담당 김대권 (외주)&#10;제작 7/20 → 8/7 · Unity 마감 8/29 (재생 통합만)&#10;오브젝트: 배 실루엣, 허공 나무 발판 형성&#10;VFX: 안개·해무, 한자 파티클·빛의 선·학익진 라인&#10;상태: 스타일 프레임만 완료 · 최종 마스터 단계 없음"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 18일</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:20.9%;width:19.8%" data-tip="S3-1 이순신 공간 — 판타지(학익진) · 영상 제작 · 세트장 2층 중앙에서 관람&#10;담당 김대권 (외주)&#10;제작 7/20 → 8/7 · Unity 마감 8/29 (재생 통합만)&#10;오브젝트: 배 실루엣, 허공 나무 발판 형성&#10;VFX: 안개·해무, 한자 파티클·빛의 선·학익진 라인&#10;상태: 스타일 프레임만 완료 · 최종 마스터 단계 없음"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 18일</i></div></div>
 
       <div class="g-group"><b>세트장 후속 — 바이진 팀</b><i></i></div>
 
@@ -266,7 +265,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     <div class="g-miles"><span style="left:67%">8/31 1차 APK</span><span style="left:83.5%">9/15 2차 테스트</span><span class="end" style="left:99%">9/30 최종 납품</span></div>
     <div class="legend">
       <span><i style="background:var(--bl)"></i>Blender 제작</span>
-      <span><i style="background:linear-gradient(to right,var(--bl) 0 55%,color-mix(in srgb,var(--bl) 38%,var(--paper)) 55% 100%)"></i>진한 부분 = 진행률 (오늘 선보다 왼쪽이면 지연)</span>
+      <span><i style="background:linear-gradient(to right,var(--bl) 0 55%,color-mix(in srgb,var(--bl) 38%,var(--paper)) 55% 100%)"></i>진한 부분 = 지나간 기간 · 흐린 부분 = 남은 기간</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>담당 미배치</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px);border:1px solid var(--mut)"></i>마감 미정·보류</span>
     </div>
@@ -322,7 +321,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
       <div class="g-lanes"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="mile" style="left:99%"></i><i class="today" style="left:33%"></i></div>
 
       <div class="g-row"><div class="g-label"><b class="on">S1 프롤로그</b> <span>이태용 · 미완</span></div>
-        <div class="g-track"><i class="seg un" data-prog="80" style="left:5.5%;width:9.9%" data-tip="S1 프롤로그 — Unity에서 직접 제작&#10;담당 이태용 (외주) · Blender 단계 없음&#10;유니티 작업 7/6 → 7/15까지 진행 · 이후 미완&#10;오브젝트: 문·복도 · VFX: 안개·해무&#10;남은 분량·마무리 일정 미정"></i><i class="seg open" style="left:15.4%;width:41.7%" data-tip="미완 구간 — 7/15 이후 남은 분량·마무리 일정 미정&#10;Unity 마감 8/22"></i><i class="tip e" style="left:57.1%"><b>미완</b></i></div></div>
+        <div class="g-track"><i class="seg un" style="left:5.5%;width:9.9%" data-tip="S1 프롤로그 — Unity에서 직접 제작&#10;담당 이태용 (외주) · Blender 단계 없음&#10;유니티 작업 7/6 → 7/15까지 진행 · 이후 미완&#10;오브젝트: 문·복도 · VFX: 안개·해무&#10;남은 분량·마무리 일정 미정"></i><i class="seg open" style="left:15.4%;width:41.7%" data-tip="미완 구간 — 7/15 이후 남은 분량·마무리 일정 미정&#10;Unity 마감 8/22"></i><i class="tip e" style="left:57.1%"><b>미완</b></i></div></div>
 
       <div class="g-row"><div class="g-label"><b>S3-1 판타지</b> <span>김대권 · 영상 제작</span></div>
         <div class="g-track"><i class="seg un" style="left:40.7%;width:24.2%" data-tip="S3-1 판타지 — 영상 재생 통합&#10;담당 김대권 제작 → 장성민 통합&#10;8/7 인계 → 8/29 · 통합 22일&#10;영상 제작이라 최종 마스터 단계 없음"></i><i class="tip e" style="left:64.9%"><b>8/29</b> · 22일</i></div></div>
@@ -574,27 +573,14 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     b.after(tag);
   });
 
-  // 진행률 채움 — 막대 안쪽 진한 부분 = 실제 진행률, 나머지는 배경 베일. 오늘 선과 비교해 지연을 본다 (2026-07-31)
-  document.querySelectorAll('.seg[data-prog]').forEach(function(seg){
-    var prog = Math.max(0, Math.min(100, parseFloat(seg.dataset.prog)));
-    if (prog < 100) {
-      var veil = document.createElement('i');
-      veil.className = 'unfill';
-      veil.style.left = prog + '%';
-      seg.appendChild(veil);
-      if (prog > 0) {
-        var mark = document.createElement('i');
-        mark.className = 'pmark';
-        mark.style.left = prog + '%';
-        seg.appendChild(mark);
-      }
-    }
-    // 기간 중 오늘까지 몇 %가 지났는지 → 진행률과 비교
+  // 지나간 기간 채움 — 오늘 이전 구간은 진하게, 남은 구간은 배경 베일로 흐리게 (2026-07-31)
+  document.querySelectorAll('.g-track .seg').forEach(function(seg){
     var l = parseFloat(seg.style.left), w = parseFloat(seg.style.width);
-    var gone = Math.max(0, Math.min(100, Math.round((pct - l) / w * 100)));
-    var gap = prog - gone;
-    seg.setAttribute('data-tip', seg.getAttribute('data-tip') + '\n── 진행률 ' + prog + '% · 기간 경과 ' + gone + '%'
-      + (gap < -10 ? ' → ' + -gap + '%p 뒤처짐 ⚠' : gap > 10 ? ' → ' + gap + '%p 앞섬' : ' → 대체로 맞음'));
+    if (isNaN(l) || isNaN(w) || pct <= l || pct >= l + w) return;   // 아직 시작 전 · 이미 끝난 막대는 그대로
+    var veil = document.createElement('i');
+    veil.className = 'unfill';
+    veil.style.left = ((pct - l) / w * 100).toFixed(1) + '%';
+    seg.appendChild(veil);
   });
 
   // 상세(툴팁)의 기간 표기에 요일을 붙인다 — "8/3 → 8/7" / "8/10~8/14" 형태만 (2026-07-31)
