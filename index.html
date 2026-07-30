@@ -52,7 +52,7 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .gantt{ overflow-x:auto; padding:2px 0 10px; }
 .g-inner{ min-width:1000px; }
 .seg[data-tip]{ cursor:help; }
-.g-axis{ position:relative; height:28px; margin:0 12px 0 300px; font-size:.68rem; color:var(--sub); }
+.g-axis{ position:relative; height:28px; margin:0 12px 0 210px; font-size:.68rem; color:var(--sub); }
 .g-axis span{ position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; }
 .g-axis span:first-child{ transform:none; }
 /* 오늘 날짜 = 맨 위 구역에만 표기, 선에 붙여 앞(왼쪽) 정렬 (2026-07-29) */
@@ -66,14 +66,14 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .g-row.multi .g-track{ height:22px; }   /* 칸 높이는 그대로, 막대를 얇게 여러 층으로 */
 .g-row:nth-child(odd){ background:var(--zebra); }
 .g-group{ display:flex; align-items:center; height:26px; margin-top:14px; }
-.g-group b{ width:300px; flex:none; padding-right:12px; font-size:.67rem; font-weight:700;
+.g-group b{ width:210px; flex:none; padding-right:12px; font-size:.67rem; font-weight:700;
   letter-spacing:.05em; color:var(--sub); white-space:nowrap;
   position:sticky; left:0; z-index:2; background:var(--paper); }
 .g-group i{ flex:1; height:1px; background:var(--line); margin-right:12px; }
 .g-group + .g-row{ background:var(--paper); }   /* 줄무늬만 끄고 색은 유지 (sticky 라벨용 불투명 배경) */
 .g-row.grp .g-label{ padding-left:10px; }
 /* 라벨 고정 — 가로 스크롤로 8월·9월 구간을 봐도 "누구 작업인지"가 남는다 (2026-07-30) */
-.g-label{ width:300px; flex:none; font-size:.78rem; line-height:1.05; padding-right:12px;
+.g-label{ width:210px; flex:none; font-size:.78rem; line-height:1.05; padding-right:12px;
   display:flex; align-items:baseline; gap:5px; overflow:hidden;
   position:sticky; left:0; z-index:2; background:inherit; }
 /* 가로 스크롤 중일 때만 라벨 경계를 그림자로 띄운다 — 막대가 라벨 밑으로 들어가는 것처럼 보이게 (2026-07-31) */
@@ -82,18 +82,15 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 @media (prefers-color-scheme: dark){ .gantt.scrolled .g-label, .gantt.scrolled .g-group b{ box-shadow:10px 0 14px -8px rgba(0,0,0,.6); } }
 :root[data-theme="dark"] .gantt.scrolled .g-label, :root[data-theme="dark"] .gantt.scrolled .g-group b{ box-shadow:10px 0 14px -8px rgba(0,0,0,.6); }
 :root[data-theme="light"] .gantt.scrolled .g-label, :root[data-theme="light"] .gantt.scrolled .g-group b{ box-shadow:10px 0 12px -8px rgba(0,0,0,.28); }
-.g-label b{ flex:none; white-space:nowrap; }                    /* 제목은 잘리지 않는다 */
-.g-label span{ flex:none; white-space:nowrap; }   /* 담당 문구도 잘리지 않는다 */
 .g-label b{ font-weight:600; color:var(--dim); flex:none; white-space:nowrap; }           /* 기본 = 미착수·비활성 */
 .g-label b.on{ font-weight:700; color:var(--ink); }        /* 진행중 = 활성 */
-.g-label span{ color:var(--dim); }
-.g-row:has(b.on) .g-label span{ color:var(--sub); }
+.g-label b.na{ color:var(--crit); }                        /* 담당 미배치 */
+/* 라벨은 제목만 — 담당·기간·상태 같은 부가 정보는 막대 상세(툴팁)에서 본다 (2026-07-31) */
+.g-label span{ display:none; }
 .tip b{ color:var(--dim); }
 .g-row:has(b.on) .tip b{ color:var(--ink); }
-.g-label b.na{ color:var(--crit); }                        /* 담당 미배치 */
 .g-row:has(b.on) .g-track{ opacity:1; }
 .g-row .g-track{ opacity:.48; }
-.g-row:has(b.on) .tip b{ color:var(--ink); } .g-label span{ color:var(--sub); font-size:.69rem; }
 
 .g-track{ position:relative; flex:1; height:10px; margin-top:1px; margin-right:12px; }
 .tip{ position:absolute; top:-3px; font-size:.66rem; line-height:18px; white-space:nowrap;
@@ -115,14 +112,14 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .summary dd i.dday{ font-style:normal; color:var(--crit); font-size:.66rem; font-weight:650; margin-left:2px; }
 .summary dd i.dday.past{ color:var(--sub); }
 header .stamp i.ago{ font-style:normal; }
-.g-lanes{ position:absolute; left:300px; right:12px; top:0; bottom:0; pointer-events:none; }
+.g-lanes{ position:absolute; left:210px; right:12px; top:0; bottom:0; pointer-events:none; }
 .g-lanes i{ position:absolute; top:0; bottom:0; width:1px; background:var(--line); }
 .g-lanes i.mile{ background:repeating-linear-gradient(to bottom,var(--ink) 0 2px,transparent 2px 7px); opacity:.13; }
 /* 오늘 선 — 눈금·막대·마일스톤 구간을 한 줄로 잇고, 막대 위에 그린다 (2026-07-29) */
 .g-lanes i.today{ background:var(--crit); width:1.5px; opacity:.9; top:-13px; bottom:-32px; z-index:3; }
 /* 날짜 박스가 없는 아래 구역들은 눈금 맨 위까지 올려 끊김 없이 잇는다 */
 .wrap > section:not(:first-of-type) .g-lanes i.today{ top:-32px; }
-.g-miles{ position:relative; height:18px; margin:12px 12px 0 300px; font-size:.67rem; color:var(--sub); }
+.g-miles{ position:relative; height:18px; margin:12px 12px 0 210px; font-size:.67rem; color:var(--sub); }
 .g-miles span{ position:absolute; transform:translateX(-50%); white-space:nowrap; }
 .g-miles span.end{ transform:translateX(-100%); }
 .g-miles span::before{ content:""; position:absolute; left:50%; top:-7px; width:1px; height:5px; background:var(--line); }
@@ -157,11 +154,11 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   .summary{ grid-template-columns:1fr; gap:3px 0; }
   .summary dt{ margin-top:8px; }
   .g-inner{ min-width:640px; }
-  /* 라벨은 두 줄로 접어 폭을 줄인다 — 잘리지는 않는다 */
+  /* 제목만 남았으므로 좁은 폭에서 두 줄로 접는다 — 잘리지는 않는다 */
   .g-label{ width:132px; flex-direction:column; align-items:flex-start; gap:1px;
     padding-right:8px; white-space:normal; }
-  .g-label b, .g-label span{ white-space:normal; word-break:keep-all; }
-  .g-row{ height:44px; }
+  .g-label b{ white-space:normal; word-break:keep-all; }
+  .g-row{ height:38px; }
   .g-axis{ margin-left:132px; } .g-lanes{ left:132px; } .g-miles{ margin-left:132px; }
   .g-group b{ width:132px; }
   .g-miles span{ font-size:.62rem; }
@@ -179,7 +176,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 00:46</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 00:52</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합 · <b>8/21</b> 라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
