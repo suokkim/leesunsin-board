@@ -178,7 +178,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 01:01</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 01:03</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합 · <b>8/21</b> 라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -570,7 +570,8 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     b.after(tag);
   });
 
-  // 진행 중인 행의 막대 라벨은 총 일수 대신 마감까지 남은 일수(D-n)로 — 대기 막대는 총 일수 그대로 (2026-07-31)
+  // 진행 중인 행의 막대 라벨은 총 일수 대신 마감까지 남은 일수로 — 대기 막대는 총 일수 그대로 (2026-07-31)
+  // 표기는 부호만: 남았으면 -n · 당일은 0 · 넘겼으면 +n
   document.querySelectorAll('.g-row').forEach(function(row){
     if (!row.querySelector('.g-label b.on')) return;          // 진행 중인 행만 (사람별 레인 포함, 예외 없음)
     row.querySelectorAll('.tip').forEach(function(tip){
@@ -578,7 +579,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
       var m = b && b.textContent.trim().match(/^(\d{1,2})\/(\d{1,2})$/);
       if (!m || !tip.lastChild || tip.lastChild.nodeType !== 3) return;   // 완료·미정 표기는 건드리지 않는다
       var left = Math.round((Date.UTC(2026, m[1] - 1, m[2]) - today) / 864e5);
-      tip.lastChild.textContent = ' · ' + (left === 0 ? 'D-day' : left > 0 ? 'D-' + left : 'D+' + -left);
+      tip.lastChild.textContent = ' · ' + (left === 0 ? '0' : left > 0 ? '-' + left : '+' + -left);
       tip.classList.add('dleft');
     });
   });
