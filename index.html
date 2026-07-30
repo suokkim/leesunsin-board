@@ -41,7 +41,8 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .summary dd b.hot{ color:var(--crit); }
 
 /* 막대 상세 — 브라우저 기본 툴팁은 1초쯤 걸려서 즉시 뜨는 것으로 교체 (2026-07-29) */
-.hovertip{ position:fixed; display:none; z-index:99; max-width:min(460px,88vw); white-space:pre-line;
+/* absolute + 문서 좌표(pageX/Y) — fixed는 핀치 줌 상태에서 터치 지점과 어긋남 (2026-07-30) */
+.hovertip{ position:absolute; display:none; z-index:99; max-width:min(460px,88vw); white-space:pre-line;
   pointer-events:none; background:var(--card); color:var(--ink); border:1px solid var(--line);
   border-radius:7px; padding:9px 11px; font-size:.75rem; line-height:1.55;
   box-shadow:0 6px 22px rgba(0,0,0,.16); }
@@ -172,7 +173,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:06</b> <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:11</b> <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -521,13 +522,18 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   var tip = document.createElement('div');
   tip.className = 'hovertip';
   document.body.appendChild(tip);
-  function place(e){
+  // 위치는 문서 좌표(pageX/Y)로 잡고, 화면 밖 판정만 visualViewport(줌·팬 반영)로 한다
+  function place(p){
+    var vv = window.visualViewport;
+    var vL = vv ? vv.pageLeft : scrollX, vT = vv ? vv.pageTop  : scrollY;
+    var vW = vv ? vv.width    : innerWidth, vH = vv ? vv.height : innerHeight;
+    tip.style.maxWidth = Math.min(460, vW * 0.88) + 'px';   // 줌 상태에선 보이는 폭에 맞춘다
     var pad = 14, r = tip.getBoundingClientRect();
-    var x = e.clientX + pad, y = e.clientY + pad;
-    if (x + r.width  > innerWidth  - 8) x = e.clientX - r.width  - pad;
-    if (y + r.height > innerHeight - 8) y = e.clientY - r.height - pad;
-    tip.style.left = Math.max(8, x) + 'px';
-    tip.style.top  = Math.max(8, y) + 'px';
+    var x = p.pageX + pad, y = p.pageY + pad;
+    if (x + r.width  > vL + vW - 8) x = p.pageX - r.width  - pad;
+    if (y + r.height > vT + vH - 8) y = p.pageY - r.height - pad;
+    tip.style.left = Math.max(vL + 8, x) + 'px';
+    tip.style.top  = Math.max(vT + 8, y) + 'px';
   }
   document.addEventListener('mouseover', function(e){
     var seg = e.target.closest('.seg[data-tip]');
