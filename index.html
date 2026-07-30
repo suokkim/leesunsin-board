@@ -1,4 +1,5 @@
 <title>이순신 한산 VR — 제작 상황판</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 :root{
   --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F5F5F6; --zebra:#FCFCFD;
@@ -60,17 +61,21 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
   border-radius:2px 2px 0 0; }
 .wrap > section:first-of-type .g-axis span.now{ display:block; }
 .g-body{ position:relative; }
-.g-row{ display:flex; align-items:flex-start; height:30px; }
+/* 행 배경을 명시(기존과 같은 색) — 라벨 sticky가 막대를 가리려면 불투명해야 한다 (2026-07-30) */
+.g-row{ display:flex; align-items:flex-start; height:30px; background:var(--paper); }
 .g-row.multi .g-track{ height:22px; }   /* 칸 높이는 그대로, 막대를 얇게 여러 층으로 */
 .g-row:nth-child(odd){ background:var(--zebra); }
 .g-group{ display:flex; align-items:center; height:26px; margin-top:14px; }
 .g-group b{ width:300px; flex:none; padding-right:12px; font-size:.67rem; font-weight:700;
-  letter-spacing:.05em; color:var(--sub); white-space:nowrap; }
+  letter-spacing:.05em; color:var(--sub); white-space:nowrap;
+  position:sticky; left:0; z-index:2; background:var(--paper); }
 .g-group i{ flex:1; height:1px; background:var(--line); margin-right:12px; }
-.g-group + .g-row{ background:none; }
+.g-group + .g-row{ background:var(--paper); }   /* 줄무늬만 끄고 색은 유지 (sticky 라벨용 불투명 배경) */
 .g-row.grp .g-label{ padding-left:10px; }
+/* 라벨 고정 — 가로 스크롤로 8월·9월 구간을 봐도 "누구 작업인지"가 남는다 (2026-07-30) */
 .g-label{ width:300px; flex:none; font-size:.78rem; line-height:1.05; padding-right:12px;
-  display:flex; align-items:baseline; gap:5px; overflow:hidden; }
+  display:flex; align-items:baseline; gap:5px; overflow:hidden;
+  position:sticky; left:0; z-index:2; background:inherit; }
 .g-label b{ flex:none; white-space:nowrap; }                    /* 제목은 잘리지 않는다 */
 .g-label span{ flex:none; white-space:nowrap; }   /* 담당 문구도 잘리지 않는다 */
 .g-label b{ font-weight:600; color:var(--dim); flex:none; white-space:nowrap; }           /* 기본 = 미착수·비활성 */
@@ -173,7 +178,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:11</b> <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:16</b> <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
