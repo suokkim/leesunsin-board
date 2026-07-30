@@ -99,6 +99,10 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .seg.tbd{ opacity:.6; background-image:repeating-linear-gradient(45deg,transparent 0 3px,var(--paper) 3px 5px); }  /* 일정 미정 */
 .seg.open{ background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px); border:1px solid var(--mut); }
 .seg.none{ background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px); border:1px solid var(--crit-soft); }
+.seg.late{ box-shadow:0 0 0 1.5px var(--crit); }             /* 마감이 오늘보다 과거 + 미완 — 자동 표기 */
+.summary dd i.dday{ font-style:normal; color:var(--crit); font-size:.66rem; font-weight:650; margin-left:2px; }
+.summary dd i.dday.past{ color:var(--sub); }
+header .stamp i.ago{ font-style:normal; }
 .g-lanes{ position:absolute; left:300px; right:12px; top:0; bottom:0; pointer-events:none; }
 .g-lanes i{ position:absolute; top:0; bottom:0; width:1px; background:var(--line); }
 .g-lanes i.mile{ background:repeating-linear-gradient(to bottom,var(--ink) 0 2px,transparent 2px 7px); opacity:.13; }
@@ -168,7 +172,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 13:54</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:06</b> <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -539,6 +543,15 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     if (e.target.closest('.seg[data-tip]')) tip.style.display = 'none';
   });
   addEventListener('scroll', function(){ tip.style.display = 'none'; }, true);
+
+  // 폰·태블릿 — 막대를 탭하면 상세 표시 (마우스가 없으면 mouseover가 안 오므로)
+  document.addEventListener('touchstart', function(e){
+    var seg = e.target.closest('.seg[data-tip]');
+    if (!seg) { tip.style.display = 'none'; return; }
+    tip.textContent = seg.getAttribute('data-tip');
+    tip.style.display = 'block';
+    place(e.touches[0]);
+  }, {passive:true});
 })();
 
 // 오늘 선·날짜 = 페이지 열 때 실제 날짜로 이동 (2026-07-01 = 0% · 2026-09-30 = 100%, 91일)
@@ -555,6 +568,33 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     s.style.left = left;
     s.textContent = n.getDate();
   });
+
+  // 마감이 오늘보다 과거인데 완료(fin)가 아닌 막대 → 지연 테두리
+  // 좌표(left+width)로 판정하므로 마감일을 따로 적어둘 필요가 없다
+  document.querySelectorAll('.g-track .seg').forEach(function(s){
+    if (s.classList.contains('fin')) return;
+    var end = parseFloat(s.style.left) + parseFloat(s.style.width);
+    if (end < pct) s.classList.add('late');
+  });
+
+  // 핵심 마감 D-day — "8/7" 같은 텍스트를 그대로 읽어 계산 (연도는 2026 고정)
+  document.querySelectorAll('.summary dd')[0].querySelectorAll('b').forEach(function(b){
+    var m = b.textContent.trim().match(/^(\d{1,2})\/(\d{1,2})$/);
+    if (!m) return;
+    var d = Math.round((Date.UTC(2026, m[1] - 1, m[2]) - today) / 864e5);
+    var tag = document.createElement('i');
+    tag.className = 'dday' + (d < 0 ? ' past' : '');
+    tag.textContent = d === 0 ? 'D-day' : d > 0 ? 'D-' + d : 'D+' + -d;
+    b.after(tag);
+  });
+
+  // 마지막 갱신 경과일 — 시각 자체는 손대지 않고 "며칠 묵었는지"만 붙인다
+  var ago = document.querySelector('.stamp i.ago');
+  if (ago && ago.dataset.since) {
+    var p = ago.dataset.since.split('-');
+    var days = Math.round((today - Date.UTC(p[0], p[1] - 1, p[2])) / 864e5);
+    ago.textContent = days <= 0 ? '(오늘)' : '(' + days + '일 전)';
+  }
 })();
 </script>
 
