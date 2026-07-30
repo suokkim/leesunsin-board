@@ -168,7 +168,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 29일 11:52</b></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 13:54</b></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -539,6 +539,22 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     if (e.target.closest('.seg[data-tip]')) tip.style.display = 'none';
   });
   addEventListener('scroll', function(){ tip.style.display = 'none'; }, true);
+})();
+
+// 오늘 선·날짜 = 페이지 열 때 실제 날짜로 이동 (2026-07-01 = 0% · 2026-09-30 = 100%, 91일)
+// HTML의 하드코딩 left 값은 JS 꺼진 환경용 폴백으로 남겨둔다
+(function(){
+  var start = Date.UTC(2026, 6, 1), SPAN = 91;   // 월은 0부터 → 6 = 7월
+  var n = new Date();
+  var today = Date.UTC(n.getFullYear(), n.getMonth(), n.getDate());
+  var pct = (today - start) / 864e5 / SPAN * 100;
+  if (pct < 0 || pct > 100) return;              // 타임라인 범위 밖이면 손대지 않음
+  var left = pct.toFixed(1) + '%';
+  document.querySelectorAll('.g-lanes i.today').forEach(function(i){ i.style.left = left; });
+  document.querySelectorAll('.g-axis span.now').forEach(function(s){
+    s.style.left = left;
+    s.textContent = n.getDate();
+  });
 })();
 </script>
 
