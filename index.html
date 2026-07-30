@@ -168,6 +168,10 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   .g-axis{ margin-left:132px; } .g-lanes{ left:132px; } .g-miles{ margin-left:132px; }
   .g-group b{ width:132px; }
   .g-miles span{ font-size:.62rem; }
+  /* 고밀도 화면에서 안내선이 너무 또렷해 막대를 방해함 — 얇고 연하게 (2026-07-30) */
+  .g-lanes i{ opacity:.5; }
+  .g-lanes i.today{ width:1px; opacity:.55; }
+  .g-lanes i.mile{ opacity:.09; }
   .board, .cols{ gap:20px; }
   .krow{ grid-template-columns:1fr; gap:4px; }
   .krow .kwhen{ text-align:left; }
@@ -178,7 +182,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:16</b> <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 30일 14:21</b> <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b class="hot">8/7</b> 세트장 전 구간·S3-1 · <b>8/14</b> 세트장 추가 · <b>8/21</b> 리토폴로지 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -540,7 +544,13 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     tip.style.left = Math.max(vL + 8, x) + 'px';
     tip.style.top  = Math.max(vT + 8, y) + 'px';
   }
+  // 탭 직후 브라우저가 쏘는 가짜 마우스 이벤트·손떨림 스크롤이 툴팁을 바로 지워버려서
+  // (탭하면 깜빡하고 사라짐) 탭 후 1초는 마우스·스크롤 핸들러를 무시한다 (2026-07-30)
+  var tapped = 0;
+  function afterTap(){ return Date.now() - tapped < 1000; }
+
   document.addEventListener('mouseover', function(e){
+    if (afterTap()) return;
     var seg = e.target.closest('.seg[data-tip]');
     if (!seg) return;
     tip.textContent = seg.getAttribute('data-tip');
@@ -548,20 +558,34 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     place(e);
   });
   document.addEventListener('mousemove', function(e){
+    if (afterTap()) return;
     if (tip.style.display === 'block') place(e);
   });
   document.addEventListener('mouseout', function(e){
+    if (afterTap()) return;
     if (e.target.closest('.seg[data-tip]')) tip.style.display = 'none';
   });
-  addEventListener('scroll', function(){ tip.style.display = 'none'; }, true);
+  addEventListener('scroll', function(){
+    if (afterTap()) return;
+    tip.style.display = 'none';
+  }, true);
 
   // 폰·태블릿 — 막대를 탭하면 상세 표시 (마우스가 없으면 mouseover가 안 오므로)
   document.addEventListener('touchstart', function(e){
-    var seg = e.target.closest('.seg[data-tip]');
+    tapped = Date.now();
+    var t = e.touches[0], seg = e.target.closest('.seg[data-tip]');
+    // 막대 높이가 10px뿐이라 정확히 못 누름 → 같은 행에서 x가 겹치는 막대를 대신 찾는다
+    if (!seg) {
+      var row = e.target.closest('.g-row');
+      if (row) seg = Array.prototype.find.call(row.querySelectorAll('.seg[data-tip]'), function(s){
+        var r = s.getBoundingClientRect();
+        return t.clientX >= r.left - 6 && t.clientX <= r.right + 6;
+      });
+    }
     if (!seg) { tip.style.display = 'none'; return; }
     tip.textContent = seg.getAttribute('data-tip');
     tip.style.display = 'block';
-    place(e.touches[0]);
+    place(t);
   }, {passive:true});
 })();
 
