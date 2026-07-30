@@ -178,7 +178,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 01:03</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 01:05</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합 · <b>8/21</b> 라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -568,6 +568,18 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     tag.className = 'dday' + (d < 0 ? ' past' : '');
     tag.textContent = d === 0 ? 'D-day' : d > 0 ? 'D-' + d : 'D+' + -d;
     b.after(tag);
+  });
+
+  // 상세(툴팁)의 기간 표기에 요일을 붙인다 — "8/3 → 8/7" / "8/10~8/14" 형태만 (2026-07-31)
+  var DOW = ['일','월','화','수','목','금','토'];
+  function withDow(mm, dd){
+    return mm + '/' + dd + '(' + DOW[new Date(Date.UTC(2026, mm - 1, dd)).getUTCDay()] + ')';
+  }
+  document.querySelectorAll('[data-tip]').forEach(function(el){
+    el.setAttribute('data-tip', el.getAttribute('data-tip').replace(
+      /(\d{1,2})\/(\d{1,2})(\s*(?:→|~)\s*)(\d{1,2})\/(\d{1,2})/g,
+      function(_, m1, d1, mid, m2, d2){ return withDow(+m1, +d1) + mid + withDow(+m2, +d2); }
+    ));
   });
 
   // 진행 중인 행의 막대 라벨은 총 일수 대신 마감까지 남은 일수로 — 대기 막대는 총 일수 그대로 (2026-07-31)
