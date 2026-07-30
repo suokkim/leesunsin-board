@@ -97,6 +97,8 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
   color:var(--sub); font-variant-numeric:tabular-nums; }
 .tip b{ color:var(--ink); font-weight:650; }
 .tip{ padding-left:7px; }
+/* 진행 중 = 남은 일수(D-n)를 강조색으로 · 대기 = 총 일수 회색 그대로 (2026-07-31) */
+.tip.dleft{ color:var(--crit); font-weight:650; }
 .seg{ position:absolute; top:0; height:10px; }
 .seg.bl{ background:var(--bl); }
 .seg.un{ background:var(--un); }
@@ -176,7 +178,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 00:52</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 00:54</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합 · <b>8/21</b> 라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -566,6 +568,20 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     tag.className = 'dday' + (d < 0 ? ' past' : '');
     tag.textContent = d === 0 ? 'D-day' : d > 0 ? 'D-' + d : 'D+' + -d;
     b.after(tag);
+  });
+
+  // 진행 중인 행의 막대 라벨은 총 일수 대신 마감까지 남은 일수(D-n)로 — 대기 막대는 총 일수 그대로 (2026-07-31)
+  document.querySelectorAll('.g-row').forEach(function(row){
+    if (!row.querySelector('.g-label b.on')) return;          // 진행 중인 행만
+    if (row.classList.contains('multi')) return;              // 사람별 레인은 "동시 N건" 표기를 유지
+    row.querySelectorAll('.tip').forEach(function(tip){
+      var b = tip.querySelector('b');
+      var m = b && b.textContent.trim().match(/^(\d{1,2})\/(\d{1,2})$/);
+      if (!m || !tip.lastChild || tip.lastChild.nodeType !== 3) return;   // 완료·미정 표기는 건드리지 않는다
+      var left = Math.round((Date.UTC(2026, m[1] - 1, m[2]) - today) / 864e5);
+      tip.lastChild.textContent = ' · ' + (left === 0 ? 'D-day' : left > 0 ? 'D-' + left : 'D+' + -left);
+      tip.classList.add('dleft');
+    });
   });
 
   // 간트를 가로로 밀면 라벨 경계에 그림자를 켠다 (데스크톱·모바일 공통)
