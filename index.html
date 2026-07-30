@@ -76,6 +76,12 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .g-label{ width:300px; flex:none; font-size:.78rem; line-height:1.05; padding-right:12px;
   display:flex; align-items:baseline; gap:5px; overflow:hidden;
   position:sticky; left:0; z-index:2; background:inherit; }
+/* 가로 스크롤 중일 때만 라벨 경계를 그림자로 띄운다 — 막대가 라벨 밑으로 들어가는 것처럼 보이게 (2026-07-31) */
+.gantt.scrolled .g-label, .gantt.scrolled .g-group b{
+  box-shadow:10px 0 12px -8px rgba(0,0,0,.28); clip-path:inset(0 -20px 0 0); }
+@media (prefers-color-scheme: dark){ .gantt.scrolled .g-label, .gantt.scrolled .g-group b{ box-shadow:10px 0 14px -8px rgba(0,0,0,.6); } }
+:root[data-theme="dark"] .gantt.scrolled .g-label, :root[data-theme="dark"] .gantt.scrolled .g-group b{ box-shadow:10px 0 14px -8px rgba(0,0,0,.6); }
+:root[data-theme="light"] .gantt.scrolled .g-label, :root[data-theme="light"] .gantt.scrolled .g-group b{ box-shadow:10px 0 12px -8px rgba(0,0,0,.28); }
 .g-label b{ flex:none; white-space:nowrap; }                    /* 제목은 잘리지 않는다 */
 .g-label span{ flex:none; white-space:nowrap; }   /* 담당 문구도 잘리지 않는다 */
 .g-label b{ font-weight:600; color:var(--dim); flex:none; white-space:nowrap; }           /* 기본 = 미착수·비활성 */
@@ -173,7 +179,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 00:21</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 00:30</b> — 감독님 구술 일정 변경 반영 <i class="ago" data-since="2026-07-30"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
   <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합 · <b>8/21</b> 라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
@@ -216,8 +222,8 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 
       <div class="g-group"><b>세트장 후속 — 바이진 팀</b><i></i></div>
 
-      <div class="g-row grp"><div class="g-label"><b>세트장 추가 작업</b> <span>바이진 외 2명 · S3-2 포함</span></div>
-        <div class="g-track"><i class="seg bl" style="left:40.7%;width:7.7%" data-tip="세트장 추가 작업 — 엘리베이터 · 2층 구조물(S3-1 영상 관람·S3-2 공간) + S3-2 부서진 판옥선&#10;담당 바이진 외 2명&#10;제작 8/7 → 8/14 (1주) · Unity 마감 8/29&#10;S3-2는 신규 제작 없이 기존 판옥선을 잘라내 편집&#10;VFX: 라이트 애니메이션, 포털+화이트아웃&#10;2026-07-29 S3-2를 이 작업에 통합"></i><i class="tip e" style="left:48.4%"><b>8/14</b> · 7일</i></div></div>
+      <div class="g-row grp"><div class="g-label"><b class="on">세트장 추가 작업</b> <span>바이진 외 2명 · S2 씬과 동시 진행</span></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:42.9%" data-tip="세트장 추가 작업 — 엘리베이터 · 2층 구조물(S3-1 영상 관람·S3-2 공간) + S3-2 부서진 판옥선&#10;담당 바이진 외 2명 · 진행 중&#10;7/6 → 8/14 · Unity 마감 8/29&#10;2026-07-31 감독님: S2-2~S2-4와 별도 후속이 아니라 같은 물량으로 동시 진행 중 (마감만 8/14)&#10;S3-2는 신규 제작 없이 기존 판옥선을 잘라내 편집 (2026-07-29 통합)&#10;VFX: 라이트 애니메이션, 포털+화이트아웃"></i><i class="tip e" style="left:48.4%"><b>8/14</b> · 동시 진행</i></div></div>
 
       <div class="g-row grp"><div class="g-label"><b>세트장 라이트 베이크</b> <span>바이진 외 2명 · 추가 작업 이후</span></div>
         <div class="g-track"><i class="seg bl" style="left:48.4%;width:7.7%" data-tip="세트장 라이트 베이크 (세트장 전 구간)&#10;담당 바이진 외 2명 (2026-07-29 확정)&#10;8/14 → 8/21 (1주) · Unity 마감 8/29&#10;2026-07-30 감독님: 라이트 베이크 1주 추가 — 세트장 추가 작업(8/7~8/14)과 병행하지 않고 순차&#10;주의: 세트장 마스터 구간(8/14~8/19)이 베이크 완료(8/21)보다 먼저 끝나는 역전"></i><i class="tip e" style="left:56.1%"><b>8/21</b> · 7일</i></div></div>
@@ -361,53 +367,58 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     <div class="g-body">
       <div class="g-lanes"><i style="left:34.1%"></i><i style="left:68.1%"></i><i class="mile" style="left:67%"></i><i class="mile" style="left:83.5%"></i><i class="mile" style="left:99%"></i><i class="today" style="left:33%"></i></div>
 
-      <div class="g-row"><div class="g-label"><b class="na">가이드 — 다큐 감독 룩</b> <span>담당 미배치 · 8/3 착수 예정</span></div>
-        <div class="g-track"><i class="seg none" style="left:36.3%;width:4.4%" data-tip="가이드 다큐 감독 룩 · 전 씬(S2-1~S8) 등장 · 메인 · 스키닝&#10;담당 미정 — 인력 미배치 (2026-07-30 감독님, 기존 노석철)&#10;착수 예정 8/3(월) · 필요일 8/7 (최초 등장 S2-1)&#10;공정: 모델링 → 텍스처링 → 리깅 → 페이셜 리깅 → 세팅&#10;모캡 클리닝·페이셜 클린업만 노석철이 담당&#10;전 씬 상시 등장 캐릭터라 가장 먼저 막히는 항목"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 미배치</i></div></div>
+      <div class="g-group"><b>노석철 — 캐릭터 제작 순차</b><i></i></div>
 
-      <div class="g-row"><div class="g-label"><b class="na">가이드 — 선임 기록관 룩</b> <span>담당 미배치 · 8/3 착수 예정</span></div>
-        <div class="g-track"><i class="seg none" style="left:36.3%;width:4.4%" data-tip="가이드 선임 기록관 룩 · 전 씬 등장 · 메인 · 스키닝&#10;담당 미정 — 인력 미배치 (2026-07-30 감독님, 기존 노석철)&#10;착수 예정 8/3(월) · 필요일 8/7&#10;공정: 모델링 → 텍스처링 → 리깅 → 페이셜 리깅 → 세팅&#10;소품: 기록관 명패(S4-1~)"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 미배치</i></div></div>
+      <div class="g-row"><div class="g-label"><b class="on">① S2-4 회의실 4종 + 갑옷 리깅</b> <span>노석철 · 진행 중</span></div>
+        <div class="g-track"><i class="seg ch" style="left:31.9%;width:15.4%" data-tip="① S2-4 조선군 본부 회의실 캐릭터 4종 + 갑옷 리깅 전체&#10;담당 노석철 · 진행 중 (2026-07-31 확인)&#10;7/30 → 8/12 (10일) · 요구 마감 8/7 → 3일 초과&#10;· 원균 — 화내는 동작 + 대사 아이들&#10;· 어영담 — 대사 아이들 + 견내량 유인책 설득 자세&#10;· 이순신 세트장용 — 익명 인물, 지도에 견내량→한산 궤적 그리기&#10;· 조선군 NPC 1종 → 19체 인스턴싱 (내부 17 + 입구 2)&#10;· 갑옷 리깅 전체 — 장군 캐릭터 + 이순신 회의실 전시 갑옷 (리지드)&#10;전원 의상만 표현 원칙(얼굴·손 없음, 투구 쓴 의상) + 기계식 제한 애니"></i><i class="tip e" style="left:47.3%"><b>8/12</b> · 10일 · 진행중</i></div></div>
 
-      <div class="g-row"><div class="g-label"><b>자라 · 갈매기</b> <span>노석철 · 일정 조율 대기</span></div>
-        <div class="g-track"><i class="seg ch tbd" style="left:40.7%;width:26.3%" data-tip="자라(S2-3) · 갈매기(S2-4·S3-1·S3-2) · 동물 · 스키닝&#10;담당 노석철 (2026-07-30 배정)&#10;일정 미정 — 감독님이 후반부로 조율 예정&#10;요구 마감은 8/7(자라 S2-3 · 갈매기 S2-4·S3-1)이지만 그보다 늦어지는 전제&#10;동작: 자라 = 목 넣었다 빼기·기어가기 / 갈매기 = 관람객 유도 비행"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 후반부</i></div></div>
+      <div class="g-row"><div class="g-label"><b>② Facial animation R&amp;D</b> <span>노석철 · 촬영 선행 조건</span></div>
+        <div class="g-track"><i class="seg ch wait" style="left:47.3%;width:5.5%" data-tip="② Facial animation R&D — Blender 애드온 활용&#10;담당 노석철 (2026-07-31 신규)&#10;8/13 → 8/18 (3일, 8/17 대체공휴일 제외)&#10;목적: 페이셜 촬영 때 촬영팀에 넘길 구체적인 가이드 작성&#10;⚠ 모캡·페이셜 촬영보다 반드시 선행 — 늦으면 가이드 없이 촬영하게 됨&#10;⚠ 이 결과에 따라 페이셜 데이터 클린업 방식이 정해진다"></i><i class="tip e" style="left:52.8%"><b>8/18</b> · 3일</i></div></div>
 
-      <div class="g-row"><div class="g-label"><b>나대용 (S2-3)</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg fin" style="left:25.3%;width:5.5%" data-tip="나대용 · S2-3 거북선 설계실 · 메인 · 리지드&#10;담당 노석철&#10;모델링 → 텍스처링 → 리깅 전부 완료 (2026-07-29 확인)&#10;동작: 대사 구간 아이들 루프 + 고민하는 자세&#10;S5 거북선 장군 나대용은 이 모델을 재사용 (버전 차이 확인 필요)"></i><i class="tip e" style="left:30.8%"><b>완료</b></i></div></div>
+      <div class="g-row"><div class="g-label"><b>③ 병사 (S4-2 거북선 외부)</b> <span>노석철</span></div>
+        <div class="g-track"><i class="seg ch wait" style="left:52.8%;width:3.3%" data-tip="③ 병사 · S4-2 거북선 외부 · NPC · 스키닝 · 2역 겸용&#10;담당 노석철&#10;8/19 → 8/21 (3일) · 요구 마감 8/19 → 2일 초과&#10;동작 2벌: 정면 문 검문(거 누구요) → 기록관 패 확인 / 측면 문 승선 안내(곧 출항하오)"></i><i class="tip e" style="left:56.1%"><b>8/21</b> · 3일</i></div></div>
 
-      <div class="g-row"><div class="g-label"><b>와키자카 갑옷 (S2-2)</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg fin" style="left:25.3%;width:5.5%" data-tip="와키자카 갑옷 · S2-2 일본군 본부 전시&#10;담당 노석철&#10;모델링 → 텍스처링 완료 (2026-07-29 확인)&#10;확인 필요: §7 소품 "갑옷·전립·탁자(완료)"와 같은 것인지"></i><i class="tip e" style="left:30.8%"><b>완료</b></i></div></div>
+      <div class="g-row"><div class="g-label"><b class="na">④ 거북선·판옥선 전투 캐릭터 9종</b> <span>노석철 · 21일</span></div>
+        <div class="g-track"><i class="seg none" style="left:59.3%;width:31.9%" data-tip="④ 거북선·판옥선 전투 캐릭터 9종 (구 '캐릭터 8종' + 판옥선 장수 통합)&#10;담당 노석철 · 8/24 → 9/21 (21일) · 요구 마감 8/22~8/26 → 최대 26일 초과 🔴&#10;[S5 거북선 내부]&#10;· 나대용 — 거북선 장군 (화포장 지휘·기록관 맞이·포격 명령)&#10;· 화포장 (포탄 줍기 에피소드·후임 다독임·기합 선창)&#10;· 포수 1종 → 20~22체 (2인 1조 화포 조작·사정거리 가늠)&#10;[S6-1·S6-2 판옥선]&#10;· 판옥선 장수 — 화살 경고 대사 + 장대 주변 지휘&#10;· 이순신 전투용 — 장대 무동작 / 맞이 대사 / S7 지휘 3단 외침 + 활 시퀀스&#10;[S6-2·S7 전투 병사]&#10;· 방패병 1종 → 16 · 화포병 1종 → 6 · 궁수 1종 → 4&#10;· 후방 빌보드 (3D 렌더샷 재활용 스프라이트)&#10;대부분 스키닝 — 1차 APK(8/31)에 이 9종 전부가 빠진다"></i><i class="tip e" style="left:91.2%"><b>9/21</b> · 🔴 초과</i></div></div>
 
-      <div class="g-row"><div class="g-label"><b>모캡 데이터 후가공</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg open" style="left:40.7%;width:26.3%" data-tip="가이드 모션캡처 클리닝 데이터 후가공(수정·보정)&#10;담당 노석철 · 착수 불가 상태&#10;선행: 배우 리허설(유상현 감독) → 모캡 촬영(외부 업체) → 클리닝&#10;촬영 날짜 미정 · 외주 확인 이력 없음"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 대기</i></div></div>
+      <div class="g-row"><div class="g-label"><b class="na">⑤ 자라 · 갈매기</b> <span>노석철 · 제작만 (애니 별건)</span></div>
+        <div class="g-track"><i class="seg none" style="left:91.2%;width:7.7%" data-tip="⑤ 자라(S2-3) · 갈매기(S2-4·S3-1·S3-2) · 동물 2종 · 스키닝&#10;담당 노석철 — 제작만 (애니 배정은 별건, 보류 상태)&#10;9/22 → 9/30 (4일) · 요구 마감 8/7 🔴&#10;감독님이 후반부로 조율 예정 — 현재 계산상 최종 납품일과 겹친다&#10;자라 = 목 넣었다 빼기·기어가기 / 갈매기 = 관람객 유도 비행 (3개 씬)"></i><i class="tip e" style="left:99%"><b>9/30</b> · 🔴 납품일</i></div></div>
 
-      <div class="g-row"><div class="g-label"><b>페이셜 데이터 클린업</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg open" style="left:40.7%;width:26.3%" data-tip="페이셜 로우 데이터 클린업&#10;담당 노석철 · 착수 불가 상태&#10;선행: 페이셜 촬영(외부 업체)&#10;촬영 날짜 미정 · 외주 확인 이력 없음"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 대기</i></div></div>
+      <div class="g-row"><div class="g-label"><b>완료분</b> <span>노석철 · 나대용 · 와키자카 갑옷</span></div>
+        <div class="g-track"><i class="seg fin" style="left:25.3%;width:5.5%" data-tip="나대용 (S2-3 거북선 설계실) — 모델링·텍스처링·리깅 완료&#10;와키자카 갑옷 (S2-2 일본군 본부 전시) — 모델링·텍스처링 완료&#10;2026-07-29 확인&#10;S5 거북선 장군 나대용은 이 모델을 재사용 (버전 차이 확인 필요)"></i><i class="tip e" style="left:30.8%"><b>완료</b></i></div></div>
 
-      <div class="g-row"><div class="g-label"><b class="on">용 — 모델링·텍스처링</b> <span>이태용</span></div>
-        <div class="g-track"><i class="seg ch" style="left:15.4%;width:26.4%" data-tip="용 · S7 학익진 전투 · 동물 · 스키닝&#10;담당 이태용 (블렌더·VFX 외주)&#10;모델링 진행중 (2026-07-29 확인)&#10;7/15 → 8/8 · 연출: 파도가 용 형상으로 솟구치는 등장&#10;이태용은 S1·용·VFX 18종 3중 겸임"></i><i class="tip e" style="left:41.8%"><b>8/8</b> · 24일 · 모델링</i></div></div>
+      <div class="g-group"><b>모캡·페이셜 트랙 — 촬영 대기</b><i></i></div>
 
-      <div class="g-row"><div class="g-label"><b>용 — 애니메이션</b> <span>이태용</span></div>
-        <div class="g-track"><i class="seg ch" style="left:41.8%;width:25.2%" data-tip="용 애니메이션&#10;담당 이태용 (2026-07-28 배정)&#10;8/8 → 8/31 · 리깅 완료가 선행&#10;물량: 발사 → 원 선회 → 접근 → 하강 → 재등장 → 화살 동반 비행 → 집어삼킴&#10;리깅이 신규 채용 미정이라 착수 시점 불확실"></i><i class="tip e" style="left:67.0%"><b>8/31</b> · 23일 · 대기</i></div></div>
+      <div class="g-row"><div class="g-label"><b>모캡 데이터 후가공</b> <span>외부 업체 (담당 변경)</span></div>
+        <div class="g-track"><i class="seg open" style="left:33%;width:34%" data-tip="모션캡처 클리닝 데이터 후가공 (수정·보정)&#10;담당 외부 업체 — 2026-07-31 변경 (기존 노석철)&#10;클리닝·보정 등 정식 후가공은 업체 납품 범위&#10;촬영 완료가 선행 · 날짜 미정"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 업체</i></div></div>
 
-      <div class="g-row"><div class="g-label"><b class="na">용 — 리깅</b> <span>담당 미배치</span></div>
-        <div class="g-track"><i class="seg none" style="left:30.8%;width:29.7%" data-tip="용 리깅&#10;담당 미정 — 신규 채용 대기 (2026-07-28 재배정)&#10;필요일 8/25 · 계획일은 채용 확정 후&#10;앞의 모델링(이태용 8/8)과 뒤의 애니메이션(이태용 8/8~) 사이를 막고 있음"></i><i class="tip e" style="left:60.5%"><b>8/25</b> · 27일 · 미배치</i></div></div>
+      <div class="g-row"><div class="g-label"><b>모캡 인수 편집</b> <span>노석철 · 구간 트리밍</span></div>
+        <div class="g-track"><i class="seg open" style="left:33%;width:34%" data-tip="모캡 인수 편집 — 업체 납품본에서 필요 구간만 잘라내고 씬·캐릭터별로 분배&#10;담당 노석철 (2026-07-31 신규 정리)&#10;신규 제작이 아니라 인수 검수·편집이라 소요가 짧다 (추정 미기입)&#10;선행: 외부 업체 후가공본 수령"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 짧음</i></div></div>
 
-      <div class="g-row"><div class="g-label"><b>갑옷 리깅 (전체)</b> <span>노석철 · 신규</span></div>
-        <div class="g-track"><i class="seg ch tbd" style="left:31.9%;width:8.8%" data-tip="갑옷 리깅 전체 — 장군 캐릭터 + 이순신 회의실(S2-4) 전시 갑옷&#10;담당 노석철 (2026-07-30 배정 확정)&#10;계획일 미기입 · 요구 마감 8/7 (S2-4 기준)&#10;리지드 리깅&#10;와키자카 갑옷(S2-2) 모델·텍은 노석철 완료분"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 계획일 없음</i></div></div>
-
-      <div class="g-row"><div class="g-label"><b>캐릭터 4종 (S2-4)</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg ch tbd" style="left:31.9%;width:8.8%" data-tip="원균 · 어영담 · 이순신(세트장용) · 조선군 NPC 약 19&#10;담당 노석철 (2026-07-30 배정 확정, 기존 신규 채용 대기)&#10;요구 마감 8/7 (S2-4 기준) · 계획일 미기입&#10;전원 의상만 표현 원칙(얼굴·손 없음) · 리지드&#10;조선군 NPC는 1종 제작 후 인스턴싱"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 계획일 없음</i></div></div>
-
-      <div class="g-row"><div class="g-label"><b>병사 (거북선 외부)</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg ch tbd" style="left:31.9%;width:21.9%" data-tip="병사 · S4-2 거북선 외부 · NPC · 스키닝 · 2역 겸용&#10;담당 노석철 (2026-07-30 배정 확정)&#10;요구 마감 8/19 (S4-2 제작이 8/17~8/19로 밀림) · 계획일 미기입&#10;동작 2벌: 정면 문 검문("거 누구요") → 기록관 패 확인 / 측면 문 승선 안내("곧 출항하오")"></i><i class="tip e" style="left:53.8%"><b>8/19</b> · 계획일 없음</i></div></div>
-
-      <div class="g-row"><div class="g-label"><b>캐릭터 8종 (S5·S6-2)</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg ch tbd" style="left:31.9%;width:25.2%" data-tip="나대용(S5 장군) · 화포장 · 포수 20~22 · 이순신(전투용) · 방패병 16 · 화포병 6 · 궁수 4 · 후방 빌보드&#10;담당 노석철 (2026-07-30 배정 확정)&#10;요구 마감 8/22 (S5·S6-2 기준) · 계획일 미기입&#10;대부분 스키닝 · 후방은 렌더샷 재활용 빌보드&#10;이순신(전투)은 지휘 3단 외침 + 활 시퀀스"></i><i class="tip e" style="left:57.1%"><b>8/22</b> · 계획일 없음</i></div></div>
-
-      <div class="g-row"><div class="g-label"><b>판옥선 장수</b> <span>노석철</span></div>
-        <div class="g-track"><i class="seg ch tbd" style="left:31.9%;width:29.6%" data-tip="판옥선 장수 (하급 장군 1명 — 2026-07-28 통합) · S6-1·S6-2 · NPC · 스키닝&#10;담당 노석철 (2026-07-30 배정 확정)&#10;요구 마감 8/26 (S6-1 기준) · 계획일 미기입&#10;동작: 화살 경고 대사 + 장대 주변 지휘"></i><i class="tip e" style="left:61.5%"><b>8/26</b> · 계획일 없음</i></div></div>
+      <div class="g-row"><div class="g-label"><b>페이셜 데이터 클린업</b> <span>노석철 · R&amp;D 결과 의존</span></div>
+        <div class="g-track"><i class="seg open" style="left:33%;width:34%" data-tip="페이셜 로우 데이터 클린업 + 이순신 캡처 클리닝·페이셜 키프레임&#10;담당 노석철&#10;선행: 페이셜 촬영 + Facial R&D 완료&#10;⚠ 작업 방식이 R&D 결과에 달려 있어 지금은 소요 산정 불가"></i><i class="tip e" style="left:67.0%"><b>미정</b> · R&D 후</i></div></div>
 
       <div class="g-row"><div class="g-label"><b>모캡·페이셜 촬영</b> <span>외부 업체</span></div>
-        <div class="g-track"><i class="seg open" style="left:30.8%;width:36.2%" data-tip="가이드 모션캡처 1개 + 페이셜 캡처 1개 · 이순신 모캡·페이셜&#10;담당 외부 업체&#10;선행: 배우 리허설(유상현 감독) — 리허설 날짜도 미정&#10;촬영 날짜 미정 · 확인 이력 없음 — 노석철 후가공 2건이 여기에 걸려 있음"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 대기</i></div></div>
+        <div class="g-track"><i class="seg open" style="left:33%;width:34%" data-tip="가이드 모션캡처 1개 + 페이셜 캡처 1개 · 이순신 모캡·페이셜&#10;담당 외부 업체&#10;선행: ① 배우 리허설(유상현 감독) ② 노석철 Facial R&D 가이드 전달&#10;촬영 날짜 미정 · 확인 이력 없음"></i><i class="tip e" style="left:67.0%"><b>미정</b> · 대기</i></div></div>
+
+      <div class="g-group"><b>가이드 2종 — 담당 미배치</b><i></i></div>
+
+      <div class="g-row"><div class="g-label"><b class="na">가이드 — 다큐 감독 룩</b> <span>미배치 · 8/3 착수 예정</span></div>
+        <div class="g-track"><i class="seg none" style="left:36.3%;width:4.4%" data-tip="가이드 다큐 감독 룩 · 전 씬(S2-1~S8) 등장 · 메인 · 스키닝&#10;담당 미정 — 인력 미배치 (2026-07-30 감독님, 기존 노석철)&#10;착수 예정 8/3(월) · 요구 마감 8/7 (최초 등장 S2-1)&#10;공정: 모델링 → 텍스처링 → 리깅 → 페이셜 리깅 → 세팅&#10;전 씬 상시 등장 캐릭터라 가장 먼저 막히는 항목"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 미배치</i></div></div>
+
+      <div class="g-row"><div class="g-label"><b class="na">가이드 — 선임 기록관 룩</b> <span>미배치 · 8/3 착수 예정</span></div>
+        <div class="g-track"><i class="seg none" style="left:36.3%;width:4.4%" data-tip="가이드 선임 기록관 룩 · 전 씬 등장 · 메인 · 스키닝&#10;담당 미정 — 인력 미배치 (2026-07-30 감독님, 기존 노석철)&#10;착수 예정 8/3(월) · 요구 마감 8/7&#10;공정: 모델링 → 텍스처링 → 리깅 → 페이셜 리깅 → 세팅&#10;소품: 기록관 명패(S4-1~)"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 미배치</i></div></div>
+
+      <div class="g-group"><b>용 (S7) — 이태용 · 리깅만 미배치</b><i></i></div>
+
+      <div class="g-row"><div class="g-label"><b class="on">용 — 모델링·텍스처링</b> <span>이태용</span></div>
+        <div class="g-track"><i class="seg ch" style="left:15.4%;width:26.4%" data-tip="용 · S7 학익진 전투 · 동물 · 스키닝&#10;담당 이태용 (블렌더·VFX 외주)&#10;7/15 → 8/8 · 연출: 파도가 용 형상으로 솟구치는 등장&#10;⚠ §7 표 상태가 '대기'(0%)로 남아 있다 — 실제 진행 확인 필요&#10;이태용은 S1·용·VFX 18종 3중 겸임"></i><i class="tip e" style="left:41.8%"><b>8/8</b> · 24일</i></div></div>
+
+      <div class="g-row"><div class="g-label"><b class="na">용 — 리깅</b> <span>담당 미배치 (신규 채용)</span></div>
+        <div class="g-track"><i class="seg none" style="left:33%;width:27.5%" data-tip="용 리깅&#10;담당 미정 — 신규 채용 대기 (2026-07-28 재배정)&#10;요구 8/25 · 계획일은 채용 확정 후&#10;앞의 모델링(이태용 8/8)과 뒤의 애니메이션(이태용 8/8~) 사이를 막고 있음&#10;캐릭터 물량 중 신규 채용에 남은 유일한 항목"></i><i class="tip e" style="left:60.5%"><b>8/25</b> · 미배치</i></div></div>
+
+      <div class="g-row"><div class="g-label"><b>용 — 애니메이션</b> <span>이태용</span></div>
+        <div class="g-track"><i class="seg ch wait" style="left:41.8%;width:25.2%" data-tip="용 애니메이션&#10;담당 이태용 (2026-07-28 배정)&#10;8/8 → 8/31 · 리깅 완료가 선행&#10;물량: 발사 → 원 선회 → 접근 → 하강 → 재등장 → 화살 동반 비행 → 집어삼킴&#10;리깅이 미배치라 착수 시점 불확실"></i><i class="tip e" style="left:67.0%"><b>8/31</b> · 23일</i></div></div>
     </div>
     <div class="g-miles"><span style="left:67%">8/31 1차 APK</span><span style="left:83.5%">9/15 2차 테스트</span><span class="end" style="left:99%">9/30 최종 납품</span></div>
     <div class="legend">
@@ -434,7 +445,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
         <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%;top:0px;height:4px" data-tip="S2-1 만남 + 브릿지①② (작화·판넬 포함) — 진행중&#10;판넬 병사 기믹 6종 + 벽화·작화 5종&#10;7/6 → 8/7 · 물량이 8/7 하루에 몰림"></i><i class="tip e" style="left:40.7%"><b>8/7</b> · 동시 1건</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b class="on">바이진 외 2명</b> <span>외주 · 3인 팀</span></div>
-        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%;top:0px;height:4px" data-tip="S2-2 · S2-3 · S2-4 세트장 씬 — 진행중&#10;7/6 → 8/7 · 3인이 씬 동시 진행"></i><i class="seg bl wait" style="left:40.7%;width:7.7%;top:6px;height:4px" data-tip="세트장 추가 작업 — 대기&#10;8/7 → 8/14"></i><i class="seg bl wait" style="left:48.4%;width:7.7%;top:6px;height:4px" data-tip="세트장 라이트 베이크 — 대기&#10;8/14 → 8/21 (추가 작업 이후 순차, 2026-07-30)"></i><i class="seg bl tbd" style="left:40.7%;width:15.4%;top:12px;height:4px" data-tip="리토폴로지·베이크 (거북선/판옥선) — 일정 미정&#10;세트장이 마무리돼야 착수 (2026-07-30) · 막대는 옛 안 위치"></i><i class="tip e" style="left:56.1%"><b>8/21</b> · 순차 정리됨</i></div></div>
+        <div class="g-track"><i class="seg bl" style="left:5.5%;width:35.2%;top:0px;height:4px" data-tip="S2-2 · S2-3 · S2-4 세트장 씬 — 진행중&#10;7/6 → 8/7 · 3인이 씬 동시 진행"></i><i class="seg bl" style="left:5.5%;width:42.9%;top:6px;height:4px" data-tip="세트장 추가 작업 (엘리베이터·2층 구조물·S3-2) — 진행중&#10;7/6 → 8/14 · S2 씬과 동시 진행 (2026-07-31 확인)"></i><i class="seg bl wait" style="left:48.4%;width:7.7%;top:6px;height:4px" data-tip="세트장 라이트 베이크 — 대기&#10;8/14 → 8/21 (추가 작업 이후 순차, 2026-07-30)"></i><i class="seg bl tbd" style="left:40.7%;width:15.4%;top:12px;height:4px" data-tip="리토폴로지·베이크 (거북선/판옥선) — 일정 미정&#10;세트장이 마무리돼야 착수 (2026-07-30) · 막대는 옛 안 위치"></i><i class="tip e" style="left:56.1%"><b>8/21</b> · 순차 정리됨</i></div></div>
 
       <div class="g-row multi"><div class="g-label"><b class="on">이태용</b> <span>외주 · 과부하</span></div>
         <div class="g-track"><i class="seg un" style="left:5.5%;width:9.9%;top:0px;height:4px" data-tip="S1 프롤로그 — 7/15까지 진행&#10;Unity 직접 제작"></i><i class="seg un tbd" style="left:15.4%;width:41.7%;top:0px;height:4px" data-tip="S1 미완 구간 — 남은 분량·일정 미정&#10;Unity 마감 8/22"></i><i class="seg ch" style="left:15.4%;width:26.4%;top:6px;height:4px" data-tip="용 — 모델링·텍스처링 — 진행중&#10;7/15 → 8/8"></i><i class="seg ch wait" style="left:41.8%;width:25.2%;top:6px;height:4px" data-tip="용 — 애니메이션 — 대기&#10;8/8 → 8/31 · 리깅(미배치)이 선행"></i><i class="seg vfx wait" style="left:49.5%;width:17.5%;top:12px;height:4px" data-tip="VFX 18종 — 대기&#10;8/15 후레쉬부터 → 8/31"></i><i class="tip e" style="left:67.0%"><b>8/31</b> · 최대 3건 동시</i></div></div>
@@ -558,6 +569,13 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     tag.className = 'dday' + (d < 0 ? ' past' : '');
     tag.textContent = d === 0 ? 'D-day' : d > 0 ? 'D-' + d : 'D+' + -d;
     b.after(tag);
+  });
+
+  // 간트를 가로로 밀면 라벨 경계에 그림자를 켠다 (데스크톱·모바일 공통)
+  document.querySelectorAll('.gantt').forEach(function(g){
+    g.addEventListener('scroll', function(){
+      g.classList.toggle('scrolled', g.scrollLeft > 2);
+    }, {passive:true});
   });
 
   // 마지막 갱신 경과일 — 시각 자체는 손대지 않고 "며칠 묵었는지"만 붙인다
