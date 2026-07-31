@@ -129,6 +129,12 @@ html, .gantt{ scrollbar-width:thin; scrollbar-color:var(--mut) transparent; }
 .pulse .chip.plain{ cursor:default; }
 .pulse .chip.plain .n{ color:var(--ink); }
 .pulse .chip.on{ background:var(--zebra); box-shadow:inset 0 -2px 0 var(--crit); }
+/* 구역 바로가기 (2026-07-31) */
+html{ scroll-behavior:smooth; }
+.wrap > section{ scroll-margin-top:26px; }
+.secnav{ display:flex; flex-wrap:wrap; gap:6px 14px; margin:12px 0 0; font-size:.73rem; }
+.secnav a{ color:var(--sub); text-decoration:none; padding:3px 0; border-bottom:1px solid transparent; }
+.secnav a:hover{ color:var(--ink); border-bottom-color:var(--crit); }
 /* 칩을 누르면 나오는 요약 패널 — 해당 항목 전부를 한 번에 보여준다 (2026-07-31) */
 .chippanel{ grid-column:1/-1; border-top:1px solid var(--line); padding:10px 0 4px; }
 .chippanel .ph{ display:flex; align-items:baseline; gap:8px; font-size:.72rem; padding:0 0 8px; }
@@ -535,7 +541,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   </div></div>
 </section>
 
-<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 15:40</b> <i class="ago" data-since="2026-07-31"></i></p>
+<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 15:41</b> <i class="ago" data-since="2026-07-31"></i></p>
 </div>
 
 <script>
@@ -794,6 +800,22 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     var days = Math.round((today - Date.UTC(p[0], p[1] - 1, p[2])) / 864e5);
     ago.textContent = days <= 0 ? '(오늘)' : '(' + days + '일 전)';
   }
+})();
+
+// 구역 바로가기 — 제목에서 자동 생성 (2026-07-31 감독님 요청)
+(function(){
+  var nav = document.createElement('nav');
+  nav.className = 'secnav';
+  document.querySelectorAll('.wrap > section > h2').forEach(function(h, i){
+    var sec = h.parentElement;
+    if (!sec.id) sec.id = 'sec' + i;
+    var a = document.createElement('a');
+    a.href = '#' + sec.id;
+    a.textContent = h.textContent.split('—')[0].trim();     // 담당자 등 뒷부분은 떼고 짧게
+    nav.appendChild(a);
+  });
+  var h1 = document.querySelector('header h1');
+  if (h1 && nav.children.length) h1.parentNode.insertBefore(nav, h1.nextSibling);
 })();
 
 // 오늘 선 — ① 구역 사이 여백을 아주 연한 실선으로 그대로 잇고 ② 날짜 표시를 화면 위에 고정 (2026-07-31 감독님 요청)
