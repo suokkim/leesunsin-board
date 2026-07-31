@@ -116,6 +116,18 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .summary dd i.dday{ font-style:normal; color:var(--crit); font-size:.66rem; font-weight:650; margin-left:2px; }
 .summary dd i.dday.past{ color:var(--sub); }
 header .stamp i.ago{ font-style:normal; }
+/* 오늘의 상황 스트립 — 막대에서 자동 집계 (2026-07-31) */
+.pulse{ display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+.pulse .chip{ display:inline-flex; align-items:baseline; gap:6px; padding:6px 11px; border:1px solid var(--line);
+  border-radius:999px; font-size:.72rem; background:var(--card); cursor:pointer; max-width:100%; }
+.pulse .chip:hover{ border-color:var(--ink); }
+.pulse .chip .n{ font-weight:700; font-variant-numeric:tabular-nums; }
+.pulse .chip .who{ color:var(--sub); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pulse .chip.hot{ border-color:var(--crit); }
+.pulse .chip.hot .n, .pulse .chip.hot .k{ color:var(--crit); }
+.pulse .chip.plain{ cursor:default; background:none; border-style:dashed; }
+.seg.flash{ animation:segflash 1.3s ease-out 2; }
+@keyframes segflash{ 0%,100%{ box-shadow:none } 35%{ box-shadow:0 0 0 3px var(--crit) } }
 .g-lanes{ position:absolute; left:210px; right:12px; top:0; bottom:0; pointer-events:none; }
 .g-lanes i{ position:absolute; top:0; bottom:0; width:1px; background:var(--line); }
 .g-lanes i.mile{ background:repeating-linear-gradient(to bottom,var(--ink) 0 2px,transparent 2px 7px); opacity:.13; }
@@ -180,13 +192,14 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 09:30</b> <i class="ago" data-since="2026-07-31"></i></p>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 09:44</b> <i class="ago" data-since="2026-07-31"></i></p>
 <dl class="summary">
   <dt>핵심 마감</dt>
-  <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합 · <b>8/21</b> 라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
+  <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합·라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
   <dt>주시할 것</dt>
   <dd class="num"><b class="hot">노석철 41일 → 완료 9/24</b> 1차 APK 3주 초과·20일 이관 필요 · <b class="hot">가이드 2종 담당 미배치</b> 착수 예정 8/3 · <b>리토폴로지 일정 미정</b> 세트장 후 · <b>S4-2 마스터·Unity 압축</b> 2일·3일 · <b>Unity 일정 전달 대기</b> 장성민 · <b>최종 마스터 담당 미정</b> 8건</dd>
 </dl>
+<div class="pulse" id="pulse"></div>
 </header>
 
 
@@ -571,6 +584,73 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     tag.textContent = d === 0 ? 'D-day' : d > 0 ? 'D-' + d : 'D+' + -d;
     b.after(tag);
   });
+
+  // 오늘의 상황 스트립 — 막대의 좌표·클래스에서 자동 집계 (2026-07-31)
+  (function(){
+    var box = document.getElementById('pulse');
+    if (!box) return;
+    var DAY = 100 / 91;                                  // 하루 = 타임라인 1.099%
+    var buckets = { today:[], late:[], soon:[], na:[], tbd:[] };
+    var seen = {}, nextDue = null;
+
+    document.querySelectorAll('.g-row:not(.multi)').forEach(function(row){
+      var title = (row.querySelector('.g-label b') || {}).textContent;
+      var na = !!row.querySelector('.g-label b.na');
+      row.querySelectorAll('.g-track .seg').forEach(function(seg){
+        if (seg.classList.contains('fin')) return;                       // 완료는 집계 밖
+        var l = parseFloat(seg.style.left), w = parseFloat(seg.style.width);
+        if (isNaN(l) || isNaN(w)) return;
+        var end = l + w, key, undated = seg.classList.contains('tbd') || seg.classList.contains('open');
+        var days = Math.round((end - pct) / DAY);        // 마감까지 남은 일수 (일 단위로 판정)
+        if (undated)            key = 'tbd';
+        else if (na)            key = 'na';
+        else if (days < 0)      key = 'late';
+        else if (days === 0)    key = 'today';
+        else if (days <= 7)     key = 'soon';
+        else                    key = null;
+        if (!undated && !na && end > pct && (nextDue === null || end < nextDue)) nextDue = end;
+        if (!key) return;
+        var uniq = key + '|' + title;
+        if (seen[uniq]) return;
+        seen[uniq] = 1;
+        buckets[key].push({ title: title, el: seg });
+      });
+    });
+
+    function chip(hot, label, items){
+      if (!items.length) return;
+      var c = document.createElement('button');
+      c.className = 'chip' + (hot ? ' hot' : '');
+      var names = items.slice(0, 4).map(function(i){ return i.title; }).join(' · ')
+                + (items.length > 4 ? ' 외 ' + (items.length - 4) + '건' : '');
+      c.innerHTML = '<span class="k">' + label + '</span><span class="n">' + items.length + '</span>'
+                  + '<span class="who">' + names + '</span>';
+      c.title = '누르면 해당 막대로 이동 — ' + items.map(function(i){ return i.title; }).join(' · ');
+      var idx = 0;
+      c.addEventListener('click', function(){                            // 누를 때마다 다음 항목으로
+        var t = items[idx++ % items.length].el;
+        t.scrollIntoView({ block:'center', inline:'center', behavior:'smooth' });
+        t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash');
+      });
+      box.appendChild(c);
+    }
+
+    if (nextDue !== null) {
+      var d = new Date(start + Math.round(nextDue / 100 * SPAN) * 864e5);
+      var left = Math.round((nextDue - pct) / DAY);
+      var head = document.createElement('span');
+      head.className = 'chip plain';
+      head.innerHTML = '<span class="k">다음 마감</span><span class="n">'
+        + (d.getUTCMonth() + 1) + '/' + d.getUTCDate() + '</span><span class="who">'
+        + (left <= 0 ? '오늘' : left + '일 남음') + '</span>';
+      box.appendChild(head);
+    }
+    chip(true,  '오늘 마감',   buckets.today);
+    chip(true,  '지연',        buckets.late);
+    chip(false, '7일 내 마감', buckets.soon);
+    chip(true,  '담당 미배치', buckets.na);
+    chip(false, '일정 미정',   buckets.tbd);
+  })();
 
   // 지나간 기간 채움 — 오늘 이전 구간은 진하게, 남은 구간은 배경 베일로 흐리게 (2026-07-31)
   document.querySelectorAll('.g-track .seg').forEach(function(seg){
