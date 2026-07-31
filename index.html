@@ -128,6 +128,23 @@ html, .gantt{ scrollbar-width:thin; scrollbar-color:var(--mut) transparent; }
 .pulse .chip.hot .k, .pulse .chip.hot .n{ color:var(--crit); }
 .pulse .chip.plain{ cursor:default; }
 .pulse .chip.plain .n{ color:var(--ink); }
+.pulse .chip.on{ background:var(--zebra); box-shadow:inset 0 -2px 0 var(--crit); }
+/* 칩을 누르면 나오는 요약 패널 — 해당 항목 전부를 한 번에 보여준다 (2026-07-31) */
+.chippanel{ grid-column:1/-1; border-top:1px solid var(--line); padding:10px 0 4px; }
+.chippanel .ph{ display:flex; align-items:baseline; gap:8px; font-size:.72rem; padding:0 0 8px; }
+.chippanel .ph b{ color:var(--crit); }
+.chippanel .ph span{ color:var(--sub); }
+.chippanel .ph .x{ margin-left:auto; color:var(--sub); font-style:normal; cursor:pointer; text-decoration:underline;
+  text-underline-offset:3px; }
+.chippanel .pline{ display:grid; grid-template-columns:1fr auto auto; gap:12px; width:100%; align-items:baseline;
+  background:none; border:0; border-bottom:1px solid var(--rule); padding:7px 2px; font:inherit; font-size:.75rem;
+  color:var(--ink); text-align:left; cursor:pointer; }
+.chippanel .pline:hover{ background:var(--zebra); }
+.chippanel .pline .w{ color:var(--dim); font-size:.69rem; }
+.chippanel .pline .d{ color:var(--sub); font-variant-numeric:tabular-nums; font-size:.7rem; min-width:76px;
+  text-align:right; }
+/* 요약 패널이 열려 있는 동안 해당 막대 전부 표시 */
+.seg.marked{ box-shadow:0 0 0 2px var(--crit); z-index:4; }
 .seg.flash{ animation:segflash 1.3s ease-out 2; }
 @keyframes segflash{ 0%,100%{ box-shadow:none } 35%{ box-shadow:0 0 0 3px var(--crit) } }
 .g-lanes{ position:absolute; left:210px; right:12px; top:0; bottom:0; pointer-events:none; }
@@ -518,7 +535,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   </div></div>
 </section>
 
-<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 15:15</b> <i class="ago" data-since="2026-07-31"></i></p>
+<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 15:40</b> <i class="ago" data-since="2026-07-31"></i></p>
 </div>
 
 <script>
@@ -637,9 +654,53 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
         var uniq = key + '|' + title;
         if (seen[uniq]) return;
         seen[uniq] = 1;
-        buckets[key].push({ title: title, el: seg });
+        var due = (row.querySelector('.g-track .tip') || {}).textContent || '';
+        buckets[key].push({ title: title, el: seg, due: due.trim(), who: (row.querySelector('.g-label span') || {}).textContent || '' });
       });
     });
+
+    var panel = document.createElement('div');
+    panel.className = 'chippanel';
+    panel.hidden = true;
+    var openKey = null;
+
+    function clearMarks(){
+      document.querySelectorAll('.seg.marked').forEach(function(el){ el.classList.remove('marked'); });
+    }
+
+    function openPanel(btn, label, items){
+      document.querySelectorAll('.pulse .chip.on').forEach(function(el){ el.classList.remove('on'); });
+      if (openKey === label) {                       // 같은 칩을 다시 누르면 닫는다
+        panel.hidden = true; openKey = null; clearMarks(); return;
+      }
+      openKey = label;
+      btn.classList.add('on');
+      clearMarks();
+      items.forEach(function(i){ i.el.classList.add('marked'); });      // 해당 항목 전부 표시
+      panel.innerHTML = '';
+      var head = document.createElement('div');
+      head.className = 'ph';
+      head.innerHTML = '<b>' + label + '</b> <span>' + items.length + '건 — 줄을 누르면 그 막대로 이동</span>'
+                     + '<i class="x">닫기</i>';
+      head.querySelector('.x').addEventListener('click', function(){
+        panel.hidden = true; openKey = null; clearMarks();
+        document.querySelectorAll('.pulse .chip.on').forEach(function(el){ el.classList.remove('on'); });
+      });
+      panel.appendChild(head);
+      items.forEach(function(i){
+        var line = document.createElement('button');
+        line.className = 'pline';
+        line.innerHTML = '<span class="t">' + i.title + '</span>'
+                       + '<span class="w">' + i.who + '</span>'
+                       + '<span class="d">' + i.due + '</span>';
+        line.addEventListener('click', function(){
+          i.el.scrollIntoView({ block:'center', inline:'center', behavior:'smooth' });
+          i.el.classList.remove('flash'); void i.el.offsetWidth; i.el.classList.add('flash');
+        });
+        panel.appendChild(line);
+      });
+      panel.hidden = false;
+    }
 
     function chip(hot, label, items){
       if (!items.length) return;
@@ -649,13 +710,8 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
                 + (items.length > 4 ? ' 외 ' + (items.length - 4) + '건' : '');
       c.innerHTML = '<span class="k">' + label + '</span><span class="n">' + items.length + '</span>'
                   + '<span class="who">' + names + '</span>';
-      c.title = '누르면 해당 막대로 이동 — ' + items.map(function(i){ return i.title; }).join(' · ');
-      var idx = 0;
-      c.addEventListener('click', function(){                            // 누를 때마다 다음 항목으로
-        var t = items[idx++ % items.length].el;
-        t.scrollIntoView({ block:'center', inline:'center', behavior:'smooth' });
-        t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash');
-      });
+      c.title = '누르면 해당 항목 전부를 요약해서 보여준다';
+      c.addEventListener('click', function(){ openPanel(c, label, items); });
       box.appendChild(c);
     }
 
@@ -685,6 +741,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
                    + '<span class="who">' + (d > 0 ? d + '일 남음' : d === 0 ? '오늘' : (-d) + '일 지남') + '</span>';
       box.appendChild(el);
     });
+    box.appendChild(panel);
   })();
 
   // 지나간 기간 채움 — 오늘 이전 구간은 진하게, 남은 구간은 배경 베일로 흐리게 (2026-07-31)
