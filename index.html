@@ -47,6 +47,12 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .gantt{ overflow-x:auto; padding:2px 0 10px; }
 .g-inner{ min-width:1000px; }
 .seg[data-tip]{ cursor:help; }
+/* 스크롤바 — 기본 흰색이 화면 톤과 안 맞아 배경에 맞춘다 (2026-07-31) */
+html, .gantt{ scrollbar-width:thin; scrollbar-color:var(--mut) transparent; }
+.gantt::-webkit-scrollbar{ height:9px; }
+.gantt::-webkit-scrollbar-track{ background:transparent; }
+.gantt::-webkit-scrollbar-thumb{ background:var(--mut); border-radius:5px; }
+.gantt::-webkit-scrollbar-thumb:hover{ background:var(--dim); }
 .g-axis{ position:relative; height:28px; margin:0 12px 0 210px; font-size:.68rem; color:var(--sub); }
 .g-axis span{ position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; }
 .g-axis span:first-child{ transform:none; }
@@ -136,12 +142,14 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .wrap > section:not(:first-of-type) .g-lanes i.today{ top:-32px; }
 /* 구역 사이 여백을 잇는 아주 연한 실선 — 글자·구분선 상관없이 그대로 통과 (2026-07-31) */
 .todaylink{ position:absolute; width:1.5px; pointer-events:none; z-index:0;
-  background:var(--crit); opacity:.12; }
+  background:var(--crit); opacity:.07; }
 /* 스크롤해도 남아 있는 오늘 날짜 — 화면 위에 고정 (2026-07-31) */
 .todaychip{ position:fixed; display:none; z-index:60; pointer-events:none;
   background:var(--crit); color:var(--paper); font-weight:700; font-size:.6rem; line-height:1.5;
   padding:0 5px; border-radius:0 0 2px 2px; font-variant-numeric:tabular-nums;
-  box-shadow:0 2px 8px rgba(0,0,0,.18); }
+  box-shadow:0 2px 8px rgba(0,0,0,.18); transition:opacity .18s, box-shadow .18s; }
+/* 여백(연한 선) 구간에 있을 때는 날짜도 같이 흐려진다 */
+.todaychip.dim{ opacity:.22; box-shadow:none; }
 .g-miles{ position:relative; height:18px; margin:12px 12px 0 210px; font-size:.67rem; color:var(--sub); }
 .g-miles span{ position:absolute; transform:translateX(-50%); white-space:nowrap; }
 .g-miles span.end{ transform:translateX(-100%); }
@@ -486,7 +494,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   </div></div>
 </section>
 
-<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 13:50</b> <i class="ago" data-since="2026-07-31"></i></p>
+<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 13:53</b> <i class="ago" data-since="2026-07-31"></i></p>
 </div>
 
 <script>
@@ -751,6 +759,10 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     chip.style.display = 'block';
     chip.style.left = (m[0].x - 1) + 'px';
     chip.style.top = '0px';
+    // 칩이 걸쳐 있는 지점이 간트 구간이면 진하게, 구역 사이 여백이면 연한 선과 같은 톤으로
+    var y = chip.getBoundingClientRect().bottom;
+    var bright = m.some(function(k){ return y >= k.top && y <= k.bottom; });
+    chip.classList.toggle('dim', !bright);
   }
 
   function all(){ draw(); follow(); }
