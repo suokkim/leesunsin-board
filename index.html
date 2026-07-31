@@ -35,11 +35,6 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 
 .cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
 
-.summary{ display:grid; grid-template-columns:66px 1fr; gap:8px 18px; margin:22px 0 0; padding-top:18px; border-top:1px solid var(--line); font-size:.81rem; align-items:baseline; }
-.summary dt{ font-size:.69rem; color:var(--sub); letter-spacing:.04em; padding-top:1px; }
-.summary dd{ margin:0; color:var(--sub); line-height:1.6; }
-.summary dd b{ color:var(--ink); font-weight:650; }
-.summary dd b.hot{ color:var(--crit); }
 
 /* 막대 상세 — 브라우저 기본 툴팁은 1초쯤 걸려서 즉시 뜨는 것으로 교체 (2026-07-29) */
 /* absolute + 문서 좌표(pageX/Y) — fixed는 핀치 줌 상태에서 터치 지점과 어긋남 (2026-07-30) */
@@ -113,19 +108,20 @@ section .sub{ font-size:.79rem; color:var(--sub); line-height:1.55; margin:8px 0
 .seg.late{ box-shadow:0 0 0 1.5px var(--crit); }             /* 마감이 오늘보다 과거 + 미완 — 자동 표기 */
 /* 지나간 기간 채움 — 오늘까지가 진한 부분, 남은 기간은 배경색 베일로 흐리게 (2026-07-31) */
 .seg > i.unfill{ position:absolute; top:0; right:0; bottom:0; background:var(--paper); opacity:.62; pointer-events:none; }
-.summary dd i.dday{ font-style:normal; color:var(--crit); font-size:.66rem; font-weight:650; margin-left:2px; }
-.summary dd i.dday.past{ color:var(--sub); }
 header .stamp i.ago{ font-style:normal; }
 /* 오늘의 상황 스트립 — 막대에서 자동 집계 (2026-07-31) */
-.pulse{ display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
-.pulse .chip{ display:inline-flex; align-items:baseline; gap:6px; padding:6px 11px; border:1px solid var(--line);
-  border-radius:999px; font-size:.72rem; background:var(--card); cursor:pointer; max-width:100%; }
-.pulse .chip:hover{ border-color:var(--ink); }
-.pulse .chip .n{ font-weight:700; font-variant-numeric:tabular-nums; }
-.pulse .chip .who{ color:var(--sub); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.pulse .chip.hot{ border-color:var(--crit); }
-.pulse .chip.hot .n, .pulse .chip.hot .k{ color:var(--crit); }
-.pulse .chip.plain{ cursor:default; background:none; border-style:dashed; }
+.pulse{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0; margin-top:22px;
+  border-top:1px solid var(--line); }
+.pulse .chip{ display:flex; align-items:baseline; gap:8px; padding:9px 0; margin:0; text-align:left;
+  font:inherit; font-size:.73rem; color:var(--ink); background:none; border:0;
+  border-bottom:1px solid var(--rule); cursor:pointer; width:100%; }
+.pulse .chip:hover .k{ text-decoration:underline; text-underline-offset:3px; }
+.pulse .chip .k{ color:var(--sub); flex:none; }
+.pulse .chip .n{ font-weight:700; font-variant-numeric:tabular-nums; flex:none; }
+.pulse .chip .who{ color:var(--dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pulse .chip.hot .k, .pulse .chip.hot .n{ color:var(--crit); }
+.pulse .chip.plain{ cursor:default; }
+.pulse .chip.plain .n{ color:var(--ink); }
 .seg.flash{ animation:segflash 1.3s ease-out 2; }
 @keyframes segflash{ 0%,100%{ box-shadow:none } 35%{ box-shadow:0 0 0 3px var(--crit) } }
 .g-lanes{ position:absolute; left:210px; right:12px; top:0; bottom:0; pointer-events:none; }
@@ -167,8 +163,6 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   .wrap{ padding:28px 16px 56px; gap:56px; }
   .wrap > section, .wrap > .cols{ padding-top:26px; }
   header h1{ font-size:1.5rem; }
-  .summary{ grid-template-columns:1fr; gap:3px 0; }
-  .summary dt{ margin-top:8px; }
   .g-inner{ min-width:640px; }
   /* 제목만 남았으므로 좁은 폭에서 두 줄로 접는다 — 잘리지는 않는다 */
   .g-label{ width:132px; flex-direction:column; align-items:flex-start; gap:1px;
@@ -192,13 +186,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 <header>
   <div class="eyebrow">이순신 한산 LBE VR</div>
   <h1>제작 상황판</h1>
-  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 10:07</b> <i class="ago" data-since="2026-07-31"></i></p>
-<dl class="summary">
-  <dt>핵심 마감</dt>
-  <dd class="num"><b>7/31</b> 세트장 공간(백승호) · <b class="hot">8/7</b> 세트장 제작 전 구간·S3-1·S4-1 · <b>8/14</b> 세트장 추가·에셋 통합·라이트 베이크 · <b>8/31</b> 1차 APK · <b>9/15</b> 2차 테스트 · <b>9/30</b> 최종 납품</dd>
-  <dt>주시할 것</dt>
-  <dd class="num"><b class="hot">노석철 41일 → 완료 9/24</b> 1차 APK 3주 초과·20일 이관 필요 · <b class="hot">가이드 2종 담당 미배치</b> 착수 예정 8/3 · <b>리토폴로지 일정 미정</b> 세트장 후 · <b>S4-2 마스터·Unity 압축</b> 2일·3일 · <b>Unity 일정 전달 대기</b> 장성민 · <b>최종 마스터 담당 미정</b> 8건</dd>
-</dl>
+  <p class="stamp num">마지막 갱신 <b>2026년 7월 31일 10:27</b> <i class="ago" data-since="2026-07-31"></i></p>
 <div class="pulse" id="pulse"></div>
 </header>
 
@@ -384,8 +372,8 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
 
       <div class="g-group"><b>노석철 — 캐릭터 제작 순차</b><i></i></div>
 
-      <div class="g-row"><div class="g-label"><b class="on">① S2-4 회의실 캐릭터 + 갑옷 리깅</b> <span>노석철 · 진행 중</span></div>
-        <div class="g-track"><i class="seg ch" style="left:31.9%;width:15.4%" data-tip="① S2-4 조선군 본부 회의실 — 제작 4종 → 배치 22체 + 갑옷 리깅&#10;담당 노석철 · 진행 중 (2026-07-31 확인)&#10;7/30 → 8/12 (10일) · 요구 마감 8/7 → 3일 초과&#10;구술 원본(08 §S2-4) 대조 2026-07-31 — 천막 회의실 구성:&#10;· 이순신 (추정 인물) 1 — 익명 연출, 지도 앞 중앙에서 견내량→한산 궤적을 그린다. 손이 없으므로 소매만 움직이는 방식 (2026-07-31 확정)&#10;· 원균 1 — 입구 쪽에 동떨어져 위치, 반대 대사 + 높은 언성&#10;· 어영담 1 — 지도 맞은편, 유인책 설득 대사&#10;· 조선군 장군 1종 → 19체 인스턴싱 (내부 17 + 입구 2) — 병사 룩 없이 전원 장군 룩 (2026-07-31 확정)&#10;· 갑옷 리깅 전체 — 장군 캐릭터 + 회의실 전시 갑옷 (리지드)&#10;전원 의상만(투구 쓴 의상, 얼굴·손 없음) + 기계장치식 제한 애니&#10;가이드(감독)는 이 항목 밖 — 담당 미배치"></i><i class="tip e" style="left:47.3%"><b>8/12</b> · 10일 · 진행중</i></div></div>
+      <div class="g-row"><div class="g-label"><b class="on">① 회의실 캐릭터 (S2-4)</b> <span>노석철 · 진행 중</span></div>
+        <div class="g-track"><i class="seg ch" style="left:28.6%;width:17.6%" data-tip="① 회의실 캐릭터 (S2-4 조선군 본부) — 4종 리깅 → 배치 19체&#10;담당 노석철 · 진행 중&#10;7/27 → 8/12 (13일) · 요구 마감 8/7 → 3일 초과&#10;착수일 7/30 → 7/27로 정정 (2026-07-31 감독님)&#10;천막 회의실 총 19명:&#10;· 이순신 (추정 인물) 1종 — 익명 연출, 지도 앞 중앙에서 견내량→한산 궤적. 손이 없으므로 소매만 움직이는 방식&#10;· 어영담 1종 — 지도 맞은편, 유인책 설득 대사&#10;· 원균 1종 — 입구 쪽에 동떨어져 위치, 반대 대사 + 높은 언성&#10;· 장군 1종 → 16체 인스턴싱 = 주변 장군 14 + 입구 2 (병사 룩 없이 전원 장군 룩)&#10;→ 제작·리깅은 4종, 배치는 3 + 16 = 19체&#10;· 함께: 갑옷 리깅 전체 — 장군 캐릭터 + 회의실 전시 갑옷 (리지드)&#10;전원 의상만(투구 쓴 의상, 얼굴·손 없음) + 기계장치식 제한 애니&#10;가이드(감독)는 이 항목 밖 — 담당 미배치"></i><i class="tip e" style="left:46.2%"><b>8/12</b> · 13일 · 진행중</i></div></div>
 
       <div class="g-row"><div class="g-label"><b>② Facial animation R&amp;D</b> <span>노석철 · 촬영 선행 조건</span></div>
         <div class="g-track"><i class="seg ch wait" style="left:47.3%;width:4.3%" data-tip="② Facial animation R&D — Blender 애드온 활용&#10;담당 노석철 (2026-07-31 신규)&#10;8/13 → 8/17 (3일 · 외주라 공휴일에도 진행)&#10;목적: 페이셜 촬영 때 촬영팀에 넘길 구체적인 가이드 작성&#10;⚠ 모캡·페이셜 촬영보다 반드시 선행 — 늦으면 가이드 없이 촬영하게 됨&#10;⚠ 이 결과에 따라 페이셜 데이터 클린업 방식이 정해진다"></i><i class="tip e" style="left:51.6%"><b>8/17</b> · 3일</i></div></div>
@@ -574,17 +562,6 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     if (end < pct) s.classList.add('late');
   });
 
-  // 핵심 마감 D-day — "8/7" 같은 텍스트를 그대로 읽어 계산 (연도는 2026 고정)
-  document.querySelectorAll('.summary dd')[0].querySelectorAll('b').forEach(function(b){
-    var m = b.textContent.trim().match(/^(\d{1,2})\/(\d{1,2})$/);
-    if (!m) return;
-    var d = Math.round((Date.UTC(2026, m[1] - 1, m[2]) - today) / 864e5);
-    var tag = document.createElement('i');
-    tag.className = 'dday' + (d < 0 ? ' past' : '');
-    tag.textContent = d === 0 ? 'D-day' : d > 0 ? 'D-' + d : 'D+' + -d;
-    b.after(tag);
-  });
-
   // 오늘의 상황 스트립 — 막대의 좌표·클래스에서 자동 집계 (2026-07-31)
   (function(){
     var box = document.getElementById('pulse');
@@ -652,6 +629,16 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     chip(true,  '제작 담당 미배치',   buckets.na);
     chip(false, '마스터 담당 미배치', buckets.namaster);
     chip(false, '일정 미정',          buckets.tbd);
+
+    // 고정 마일스톤 — 남은 일수만 자동 계산
+    [[8, 31, '1차 APK'], [9, 15, '2차 테스트'], [9, 30, '최종 납품']].forEach(function(m){
+      var d = Math.round((Date.UTC(2026, m[0] - 1, m[1]) - today) / 864e5);
+      var el = document.createElement('span');
+      el.className = 'chip plain';
+      el.innerHTML = '<span class="k">' + m[2] + '</span><span class="n">' + m[0] + '/' + m[1] + '</span>'
+                   + '<span class="who">' + (d > 0 ? d + '일 남음' : d === 0 ? '오늘' : (-d) + '일 지남') + '</span>';
+      box.appendChild(el);
+    });
   })();
 
   // 지나간 기간 채움 — 오늘 이전 구간은 진하게, 남은 구간은 배경 베일로 흐리게 (2026-07-31)
