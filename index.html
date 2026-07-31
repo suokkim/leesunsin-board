@@ -129,6 +129,14 @@ html, .gantt{ scrollbar-width:thin; scrollbar-color:var(--mut) transparent; }
 .pulse .chip.plain{ cursor:default; }
 .pulse .chip.plain .n{ color:var(--ink); }
 .pulse .chip.on{ background:var(--zebra); box-shadow:inset 0 -2px 0 var(--crit); }
+.pulse .chip:not(.plain){ gap:6px; }
+/* 맨 위로 (2026-07-31) */
+.totop{ position:fixed; right:18px; bottom:18px; z-index:70; opacity:0; pointer-events:none;
+  transform:translateY(6px); transition:opacity .18s, transform .18s;
+  background:var(--card); color:var(--sub); border:1px solid var(--line); border-radius:20px;
+  padding:8px 14px; font:inherit; font-size:.72rem; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.12); }
+.totop.show{ opacity:1; pointer-events:auto; transform:none; }
+.totop:hover{ color:var(--ink); border-color:var(--dim); }
 /* 구역 바로가기 (2026-07-31) */
 html{ scroll-behavior:smooth; }
 .wrap > section{ scroll-margin-top:26px; }
@@ -541,7 +549,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
   </div></div>
 </section>
 
-<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 15:42</b> <i class="ago" data-since="2026-07-31"></i></p>
+<p class="stamp num">마지막 갱신 <b>2026년 7월 31일 15:45</b> <i class="ago" data-since="2026-07-31"></i></p>
 </div>
 
 <script>
@@ -712,10 +720,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
       if (!items.length) return;
       var c = document.createElement('button');
       c.className = 'chip' + (hot ? ' hot' : '');
-      var names = items.slice(0, 4).map(function(i){ return i.title; }).join(' · ')
-                + (items.length > 4 ? ' 외 ' + (items.length - 4) + '건' : '');
-      c.innerHTML = '<span class="k">' + label + '</span><span class="n">' + items.length + '</span>'
-                  + '<span class="who">' + names + '</span>';
+      c.innerHTML = '<span class="k">' + label + '</span><span class="n">' + items.length + '</span>';
       c.title = '누르면 해당 항목 전부를 요약해서 보여준다';
       c.addEventListener('click', function(){ openPanel(c, label, items); });
       box.appendChild(c);
@@ -800,6 +805,20 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     var days = Math.round((today - Date.UTC(p[0], p[1] - 1, p[2])) / 864e5);
     ago.textContent = days <= 0 ? '(오늘)' : '(' + days + '일 전)';
   }
+})();
+
+// 맨 위로 — 한 번에 상단 이동 (2026-07-31 감독님 요청)
+(function(){
+  var btn = document.createElement('button');
+  btn.className = 'totop';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', '맨 위로');
+  btn.textContent = '↑ 맨 위';
+  btn.addEventListener('click', function(){ scrollTo({ top:0, behavior:'smooth' }); });
+  document.body.appendChild(btn);
+  function toggle(){ btn.classList.toggle('show', scrollY > 300); }
+  addEventListener('scroll', toggle, { passive:true });
+  toggle();
 })();
 
 // 구역 바로가기 — 제목에서 자동 생성 (2026-07-31 감독님 요청)
