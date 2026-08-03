@@ -4,16 +4,16 @@
 :root{
   --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F5F5F6; --zebra:#FCFCFD;
   --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1; --dim:#BEBEC3;
-  --crit:#B5493F; --crit-soft:#E4C2BD; --ch:#8A7563; --vfx:#9C8A52; --vid:#7B7391;
+  --crit:#B5493F; --crit-soft:#E4C2BD; --ch:#8A7563; --vfx:#9C8A52; --vid:#7B7391; --fin:#9DBA9A;
 }
 @media (prefers-color-scheme: dark){
   :root{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#1A1B1E; --zebra:#131416;
-    --bl:#75899E; --un:#628079; --mut:#3C3C41; --dim:#55555C; --crit:#C97F77; --crit-soft:#5E3B37; --ch:#A08C79; --vfx:#B3A06A; --vid:#918AA6; }
+    --bl:#75899E; --un:#628079; --mut:#3C3C41; --dim:#55555C; --crit:#C97F77; --crit-soft:#5E3B37; --ch:#A08C79; --vfx:#B3A06A; --vid:#918AA6; --fin:#5C7A58; }
 }
 :root[data-theme="light"]{ --paper:#FAFAFA; --card:#FFFFFF; --ink:#4B4F56; --sub:#9A9AA0; --line:#E8E8E9; --rule:#F5F5F6; --zebra:#FCFCFD;
-  --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1; --dim:#BEBEC3; --crit:#B5493F; --crit-soft:#E4C2BD; --ch:#8A7563; --vfx:#9C8A52; --vid:#7B7391; }
+  --bl:#5D6E80; --un:#93ABA6; --mut:#CFCFD1; --dim:#BEBEC3; --crit:#B5493F; --crit-soft:#E4C2BD; --ch:#8A7563; --vfx:#9C8A52; --vid:#7B7391; --fin:#9DBA9A; }
 :root[data-theme="dark"]{ --paper:#0F0F11; --card:#18181B; --ink:#C2C4C9; --sub:#84848B; --line:#282A2E; --rule:#1A1B1E; --zebra:#131416;
-  --bl:#75899E; --un:#628079; --mut:#3C3C41; --dim:#55555C; --crit:#C97F77; --crit-soft:#5E3B37; --ch:#A08C79; --vfx:#B3A06A; --vid:#918AA6; }
+  --bl:#75899E; --un:#628079; --mut:#3C3C41; --dim:#55555C; --crit:#C97F77; --crit-soft:#5E3B37; --ch:#A08C79; --vfx:#B3A06A; --vid:#918AA6; --fin:#5C7A58; }
 
 *{ box-sizing:border-box; }
 body{ background:var(--paper); color:var(--ink);
@@ -103,7 +103,7 @@ html, .gantt{ scrollbar-width:thin; scrollbar-color:var(--mut) transparent; }
 .seg{ position:absolute; top:0; height:10px; }
 .seg.bl{ background:var(--bl); }
 .seg.un{ background:var(--un); }
-.seg.fin{ background:var(--mut); }
+.seg.fin{ background:var(--fin); }        /* 완료 = 연한 녹색 (2026-08-03) */
 .seg.ch{ background:var(--ch); }
 .seg.vfx{ background:var(--vfx); }
 .seg.vid{ background:var(--vid); }
@@ -315,6 +315,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     <div class="g-miles"><span style="left:67%">8/31 1차 APK</span><span style="left:83.5%">9/15 2차 테스트</span><span class="hol" style="left:96.2%">추석</span><span class="end" style="left:99%">9/30 최종 납품</span></div>
     <div class="legend">
       <span><i style="background:var(--bl)"></i>Blender 제작</span>
+      <span><i style="background:var(--fin)"></i>완료</span>
       <span><i style="background:linear-gradient(to right,var(--bl) 0 55%,color-mix(in srgb,var(--bl) 38%,var(--paper)) 55% 100%)"></i>진한 부분 = 지나간 기간 · 흐린 부분 = 남은 기간</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>담당 미배치</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px);border:1px solid var(--mut)"></i>마감 미정·보류</span>
@@ -502,7 +503,7 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
     <div class="g-miles"><span style="left:67%">8/31 1차 APK</span><span style="left:83.5%">9/15 2차 테스트</span><span class="hol" style="left:96.2%">추석</span><span class="end" style="left:99%">9/30 최종 납품</span></div>
     <div class="legend">
       <span><i style="background:var(--ch)"></i>캐릭터 제작</span>
-      <span><i style="background:var(--mut)"></i>완료</span>
+      <span><i style="background:var(--fin)"></i>완료</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>담당 미배치</span>
       <span><i style="background:repeating-linear-gradient(45deg,var(--mut),var(--mut) 3px,transparent 3px,transparent 7px);border:1px solid var(--mut)"></i>일정 미정</span>
     </div>
@@ -545,11 +546,11 @@ footer{ color:var(--sub); font-size:.74rem; line-height:1.5; border-top:1px soli
         <div class="g-track"><i class="seg none" style="left:41.8%;width:18.6%;top:0px;height:4px" data-tip="S7 학익진 전투 제작 — 미배치&#10;8/8 → 8/25 · 최난도"></i><i class="seg none" style="left:44%;width:13.1%;top:6px;height:4px" data-tip="S6-2 판옥선 제작 — 미배치&#10;8/10 → 8/22"></i><i class="seg none" style="left:30.8%;width:29.7%;top:12px;height:4px" data-tip="용 리깅 — 미배치&#10;필요일 8/25 · 캐릭터 나머지는 2026-07-30 노석철로 확정"></i><i class="tip e" style="left:64.8%"><b>8/31</b> · 3건 미배치</i></div></div>
     </div>
     <div class="g-miles"><span style="left:67%">8/31 1차 APK</span><span style="left:83.5%">9/15 2차 테스트</span><span class="hol" style="left:96.2%">추석</span><span class="end" style="left:99%">9/30 최종 납품</span></div>
-    <div class="legend"><span><i style="background:var(--bl)"></i>Blender</span><span><i style="background:var(--un)"></i>Unity</span><span><i style="background:var(--ch)"></i>캐릭터·동물</span><span><i style="background:var(--vfx)"></i>VFX</span><span><i style="background:var(--vid)"></i>영상</span><span><i style="background:var(--bl);opacity:.34"></i>시작 전</span><span><i style="background:var(--bl);opacity:.6;background-image:repeating-linear-gradient(45deg,transparent 0 3px,var(--paper) 3px 5px)"></i>일정 미정</span><span><i style="background:var(--mut)"></i>완료</span><span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>미배치</span></div>
+    <div class="legend"><span><i style="background:var(--bl)"></i>Blender</span><span><i style="background:var(--un)"></i>Unity</span><span><i style="background:var(--ch)"></i>캐릭터·동물</span><span><i style="background:var(--vfx)"></i>VFX</span><span><i style="background:var(--vid)"></i>영상</span><span><i style="background:var(--bl);opacity:.34"></i>시작 전</span><span><i style="background:var(--bl);opacity:.6;background-image:repeating-linear-gradient(45deg,transparent 0 3px,var(--paper) 3px 5px)"></i>일정 미정</span><span><i style="background:var(--fin)"></i>완료</span><span><i style="background:repeating-linear-gradient(45deg,var(--crit-soft),var(--crit-soft) 3px,transparent 3px,transparent 7px);border:1px solid var(--crit-soft)"></i>미배치</span></div>
   </div></div>
 </section>
 
-<p class="stamp num">마지막 갱신 <b>2026년 8월 3일 14:07</b> <i class="ago" data-since="2026-07-31"></i></p>
+<p class="stamp num">마지막 갱신 <b>2026년 8월 3일 14:09</b> <i class="ago" data-since="2026-07-31"></i></p>
 </div>
 
 <script>
